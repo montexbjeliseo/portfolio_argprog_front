@@ -1,0 +1,14 @@
+<div class="bg-light border rounded-3 container-fluid">
+    <h2>Experiencia</h2>
+    <div *ngFor="let experience of data" class="row m-4">
+        <div class="col-6 col-md-4">
+            <img src="img/arg_prog.jpg" width="100%">
+        </div>
+        <div class="col-md-8">
+            <h3>{{experience.title}}</h3>
+            <p>
+                {{experience.description}}
+            </p>
+        </div>
+    </div>
+</div>
