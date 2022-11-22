@@ -5,6 +5,7 @@ import { FooterComponent } from './footer/footer.component';
 import { AboutSectionComponent } from './about-section/about-section.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ExperienceSectionComponent } from './experience-section/experience-section.component';
+import { EducationSectionComponent } from './education-section/education-section.component';
 
 
 @NgModule({
@@ -12,13 +13,15 @@ import { ExperienceSectionComponent } from './experience-section/experience-sect
     NavbarComponent,
     FooterComponent,
     AboutSectionComponent,
-    ExperienceSectionComponent
+    ExperienceSectionComponent,
+    EducationSectionComponent
   ],
   exports: [
     NavbarComponent,
     FooterComponent,
     AboutSectionComponent,
-    ExperienceSectionComponent
+    ExperienceSectionComponent,
+    EducationSectionComponent
   ],
   imports: [
     CommonModule,
