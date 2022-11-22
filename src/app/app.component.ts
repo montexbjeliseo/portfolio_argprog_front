@@ -1,22 +1,15 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  nombre: string = '';
-  telefono = '';
-  dni = '';
+	title: string = 'Montex Bj Eliseo - Argentina Programa';
 
-  cambiaDni(valor : string) {
-    // Podes consultar el valor por consola
-    console.log(valor);
-    this.dni = valor;
-  }
+	constructor(){}
 
-  onClick() {
-    alert('Hiciste click!!');
-  }
+	ngOnInit(): void {
+	}
 }
