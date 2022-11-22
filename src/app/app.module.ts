@@ -1,8 +1,10 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FeatureModule } from './feature/feature.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -10,11 +12,9 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
-  ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA,
-    NO_ERRORS_SCHEMA
+    AppRoutingModule,
+    FeatureModule, //Non dimenticare di importare il module che vieni a esser mostrato nell'AppComponent via routerOutlet
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

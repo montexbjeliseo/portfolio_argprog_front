@@ -1,0 +1,22 @@
+<div class="bg-light border rounder-3 container-fluid">
+	<img src="assets/img/banner.jpg" style="width:100%;object-fit: cover;">
+	<img src="assets/img/profile.png" class="rounded-circle profile-img" style="margin-top: -100px;width: 200px; background-color: #ddd;">
+	<div class="row">
+    	<div class="col-6 col-md-4">
+    		<h3>{{data.lastName}}, {{data.firstName}}</h3>
+    		<h4>Full Stack Developer: Java/Angular</h4>
+    		<div>
+    			<ul>
+    				<li>Email: {{data.email}}</li>
+    				<li>Tel: {{data.phoneNumber}}</li>
+    			</ul>
+    		</div>
+    	</div>
+    	<div class="col-md-8">
+    		<h3>Acerca de</h3>
+    		<div>
+    			{{data.about}}
+            </div>
+    	</div>
+  	</div>
+</div>
