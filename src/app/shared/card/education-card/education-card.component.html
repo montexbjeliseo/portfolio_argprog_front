@@ -1,0 +1,21 @@
+<div *ngIf="visible==true" class="row m-1">
+    <div class="buttons">
+        <ng-container *ngIf="editting==false">
+            <app-edit-button (click)="edit();"></app-edit-button>
+            <app-delete-button (click)="hide();"></app-delete-button>
+        </ng-container>
+        <ng-container *ngIf="editting==true">
+            <app-v-button (click)="save();"></app-v-button>
+            <app-x-button (click)="reset();"></app-x-button>
+        </ng-container>
+    </div>
+    <div class="col-6 col-md-4 border">
+        <img src="assets/img/education.png" width="100%">
+    </div>
+    <div class="col-md-8">
+        <div class="h3" [attr.contenteditable]=editting #title>{{data.title}}</div>
+        <div [attr.contenteditable]=editting #description>{{data.description}}</div>
+        <div class="h4" [attr.contenteditable]=editting #institution>{{data.institution}}</div>
+        <div [attr.contenteditable]=editting #aboutInstitution>{{data.aboutInstitution}}</div>
+    </div>
+</div>

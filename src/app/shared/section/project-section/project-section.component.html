@@ -1,0 +1,12 @@
+<div class="border rounded-3 container-fluid">
+    <h2>Proyectos</h2>
+    <ng-container  *ngFor="let project of data">
+        <app-project-card [data]="project"></app-project-card>
+    </ng-container>
+    <div class="p-3 d-flex justify-content-center">
+        <app-add-button (click)="add();"></app-add-button>
+    </div>
+    <ng-template #nocontent>
+        <i>Sin experiencias</i>
+    </ng-template>
+</div>

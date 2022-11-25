@@ -1,0 +1,9 @@
+<div class="p-3 border rounded-3 container-fluid">
+    <h2 class="h2">{{ "educacion" | uppercase}}</h2>
+    <ng-container *ngFor="let education of data">
+        <app-education-card [data]="education"></app-education-card>
+    </ng-container>
+    <div class="p-3 d-flex justify-content-center">
+        <app-add-button (click)="add();"></app-add-button>
+    </div>
+</div>

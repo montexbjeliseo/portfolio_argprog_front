@@ -1,0 +1,46 @@
+{
+    "firstName": "Eliseo Diego",
+    "lastName": "Montenegro",
+    "about": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Animi placeat pariatur id accusantium dicta quisquam eaque consectetur quia rerum quasi amet, autem exercitationem perspiciatis nam hic dolores at corporis corrupti?",
+    "photo": null,
+    "birthDate": null,
+    "email": "secondmtx@gmail.com",
+    "phoneNumber": null,
+    "educations": [
+        {
+            "id": 1,
+            "title": "Tecnicatura Superior en Desarrollo de Software",
+            "description": "2021 - Actualidad",
+            "photo": null,
+            "institution": "IES Machagai",
+            "aboutInstitution": "Machagai, Chaco - Argentina",
+            "indexPosition": 1
+        }
+    ],
+    "experiences": [
+        {
+            "title": "Experiencia 1",
+            "description": "Descripcion experiencia",
+            "institution": "Nombre de la empresa",
+            "aboutInstitution": "Descripcion de la empresa"
+        }
+    ],
+    "projects": [
+        {
+            "id": 1,
+            "title": "Tecnicatura Superior en Desarrollo de Software",
+            "description": "2021 - Actualidad",
+            "photo": null,
+            "institution": "IES Machagai",
+            "aboutInstitution": "Machagai, Chaco - Argentina",
+            "indexPosition": null
+        }
+    ],
+    "skills": [
+        {
+            "name": "Habilidad 1",
+            "description": "Descripcion habilidad"
+        }
+    ],
+    "socialMedias": []
+}

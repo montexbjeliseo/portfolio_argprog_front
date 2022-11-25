@@ -1,0 +1,20 @@
+.buttons {   
+    box-sizing: border-box;
+    display: flex;
+    justify-content: right;
+}
+
+.bi-plus-lg {
+    color: #ccc;
+}
+
+.bi-plus-lg:hover {
+    color: #444;
+    cursor: pointer;
+}
+
+[contenteditable=true]:focus {
+    border:0;
+    border-bottom: 2px solid #465611;
+    outline: none;
+}

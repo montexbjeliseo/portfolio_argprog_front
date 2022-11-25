@@ -1,0 +1,41 @@
+<div class="border rounder-3 container-fluid bg-dark">
+	<img src="assets/img/banner.jpg" style="width:100%;object-fit: cover;">
+	<img src="assets/img/profile.png" class="rounded-circle profile-img"
+		style="margin-top: -100px;width: 200px; background-color: #ddd;">
+	<div class="row">
+		<div class="col-6 col-md-4">
+			<div class="fullname">
+				<div class="buttons">
+					<app-edit-button *ngIf="edittingName==false" (click)="editName();"></app-edit-button>
+					<ng-container *ngIf="edittingName==true">
+						<app-v-button (click)="saveName();"></app-v-button>
+						<app-x-button (click)="resetName();"></app-x-button>
+					</ng-container>
+				</div>
+				<div class="h3">
+					{{data.lastName}}, {{data.firstName}}
+				</div>
+			</div>
+			<h4>Full Stack Developer: Java/Angular</h4>
+			<div>
+				<ul>
+					<li>Email: {{data.email}}</li>
+					<li>Tel: {{data.phoneNumber}}</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<div class="buttons">
+				<app-edit-button *ngIf="edittingAbout==false" (click)="editAbout();"></app-edit-button>
+				<ng-container *ngIf="edittingAbout==true">
+					<app-v-button (click)="saveAbout();"></app-v-button>
+					<app-x-button (click)="resetAbout();"></app-x-button>
+				</ng-container>
+			</div>
+			<h3>Sobre mí</h3>
+			<div>
+				{{data.about}}
+			</div>
+		</div>
+	</div>
+</div>

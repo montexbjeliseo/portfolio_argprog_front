@@ -1,0 +1,21 @@
+<div *ngIf="visible==true" class="row m-4">
+    <div class="buttons">
+        <ng-container *ngIf="editting==false">
+            <app-edit-button (click)="edit();"></app-edit-button>
+            <app-delete-button (click)="hide();"></app-delete-button>
+        </ng-container>
+        <ng-container *ngIf="editting==true">
+            <app-v-button (click)="save();"></app-v-button>
+            <app-x-button (click)="reset();"></app-x-button>
+        </ng-container>
+    </div>
+    <div class="col-6 col-md-4">
+        <img src="assets/img/arg_prog.jpg" width="100%">
+    </div>
+    <div class="col-md-8">
+        <div class="h3">{{data.title}}</div>
+        <div>{{data.description}}</div>
+        <div class="h4">{{data.institution}}</div>
+        <div>{{data.aboutInstitution}}</div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="border rounded-3 container-fluid gap-2">
+    <h2>Hard and Soft Skills</h2>
+    <ng-container *ngFor="let skill of data">
+        <app-skill-card [data]="skill"></app-skill-card>
+    </ng-container>
+    <div class="p-3 d-flex justify-content-center">
+        <app-add-button (click)="add();"></app-add-button>
+    </div>
+</div>
