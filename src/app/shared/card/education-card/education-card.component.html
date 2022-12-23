@@ -2,7 +2,7 @@
     <div class="buttons">
         <ng-container *ngIf="editting==false">
             <app-edit-button (click)="edit();"></app-edit-button>
-            <app-delete-button (click)="hide();"></app-delete-button>
+            <app-delete-button data-bs-toggle="modal" data-bs-target="#staticBackdrop"></app-delete-button>
         </ng-container>
         <ng-container *ngIf="editting==true">
             <app-v-button (click)="save();"></app-v-button>
@@ -18,4 +18,5 @@
         <div class="h4" [attr.contenteditable]=editting #institution>{{data.institution}}</div>
         <div [attr.contenteditable]=editting #aboutInstitution>{{data.aboutInstitution}}</div>
     </div>
+    <app-confirmation-modal></app-confirmation-modal>
 </div>

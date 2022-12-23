@@ -17,7 +17,11 @@ export class ExperienceSectionComponent implements OnInit {
   }
 
   add() {
-    this.data.push(ExperienceSample);
+    this.data.push(new ExperienceSample());
+  }
+
+  delete(index: number) {
+    this.data.splice(index, 1);
   }
 
 }

@@ -7,7 +7,7 @@ import { EducationService } from '../../service/education.service';
   styleUrls: ['./education-card.component.css']
 })
 export class EducationCardComponent implements OnInit {
-
+  
   @Input() data: any;
 
   @ViewChild("title") title!: ElementRef;
@@ -31,7 +31,6 @@ export class EducationCardComponent implements OnInit {
   }
 
   save() {
-    //enviar y recargar datos
     this.data.title = this.title.nativeElement.innerText;
     this.data.description = this.description.nativeElement.innerText;
     this.data.institution = this.institution.nativeElement.innerText;

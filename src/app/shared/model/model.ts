@@ -8,39 +8,39 @@ interface UserLogin {
 }
 
 interface Education {
-    id: number;
-    title: string;
-    description: string;
-    photo: string;
-    institution: string;
-    aboutInstitution: string;
-    indexPosition: number;
+    id: number | null;
+    title: string | null;
+    description: string | null;
+    photo: string | null;
+    institution: string | null;
+    aboutInstitution: string | null;
+    indexPosition: number | null;
 }
 
 interface Experience {
-    id: number;
-    title: string;
-    description: string;
-    photo: string;
-    institution: string;
-    aboutInstitution: string;
-    indexPosition: number;
+    id: number | null;
+    title: string | null;
+    description: string | null;
+    photo: string | null;
+    institution: string | null;
+    aboutInstitution: string | null;
+    indexPosition: number | null;
 }
 
 interface Skill {
-    id: number;
-    name: string;
-    description: string;
+    id: number | null;
+    name: string | null;
+    description: string | null;
 }
 
 interface Project {
-    id: number;
-    title: string;
-    description: string;
-    photo: string;
-    institution: string;
-    aboutInstitution: string;
-    indexPosition: number;
+    id: number | null;
+    title: string | null;
+    description: string | null;
+    photo: string | null;
+    institution: string | null;
+    aboutInstitution: string | null;
+    indexPosition: number | null;
 }
 
 export {

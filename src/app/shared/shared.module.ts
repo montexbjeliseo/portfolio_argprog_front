@@ -15,11 +15,12 @@ import { VButtonComponent } from './button/v-button/v-button.component';
 import { EducationCardComponent } from './card/education-card/education-card.component';
 import { FormsModule } from '@angular/forms';
 import { XButtonComponent } from './button/x-button/x-button.component';
-import { HttpService } from './service/http.service';
 import { SkillCardComponent } from './card/skill-card/skill-card.component';
 import { ProjectCardComponent } from './card/project-card/project-card.component';
 import { ExperienceCardComponent } from './card/experience-card/experience-card.component';
 import { ConfirmationModalComponent } from './modal/confirmation-modal/confirmation-modal.component';
+import { WarningBadgeComponent } from './badge/warning-badge/warning-badge.component';
+import { LoadingSpinnerComponent } from './spinner/loading-spinner/loading-spinner.component';
 
 
 @NgModule({
@@ -40,7 +41,9 @@ import { ConfirmationModalComponent } from './modal/confirmation-modal/confirmat
     SkillCardComponent,
     ProjectCardComponent,
     ExperienceCardComponent,
-    ConfirmationModalComponent
+    ConfirmationModalComponent,
+    WarningBadgeComponent,
+    LoadingSpinnerComponent
   ],
   exports: [
     NavbarComponent,
@@ -58,13 +61,17 @@ import { ConfirmationModalComponent } from './modal/confirmation-modal/confirmat
     XButtonComponent,
     SkillCardComponent,
     ProjectCardComponent,
-    ExperienceCardComponent
+    ExperienceCardComponent,
+    ConfirmationModalComponent,
+    WarningBadgeComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     CommonModule,
     HttpClientModule,
     FormsModule
   ],
-  providers: [HttpService]
+  providers: [
+  ]
 })
 export class SharedModule { }
