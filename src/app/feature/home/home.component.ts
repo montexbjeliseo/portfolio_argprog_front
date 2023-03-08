@@ -1,4 +1,8 @@
+import { AnimationStyleMetadata } from '@angular/animations';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { retry } from 'rxjs';
+import { catchError } from 'rxjs/operators'
 import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
@@ -13,8 +17,14 @@ export class HomeComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.dataService.get()
-      .subscribe(body => this.data = body);
+    this.dataService.get().subscribe({
+      next: (v) => { this.data = v }, error: (e) => {
+      alert(e.text());
+    }});
+  }
+
+  handleError(e: any){
+    console.log(e);
   }
 
 }

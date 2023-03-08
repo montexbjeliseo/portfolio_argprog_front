@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
     password: ""
   }
 
+  passusererror = false;
+
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
@@ -24,10 +26,15 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.authService.login(this.user)
-      .subscribe(res => {
+      .subscribe({
+        next: (res) => {
         this.authService.setToken((res as AuthResponse).jwtToken);
         this.router.navigateByUrl('/');
-      });
+      },
+        error: (err) => {
+          this.passusererror = true;
+        }
+    });
   }
 
 }

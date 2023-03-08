@@ -10,6 +10,10 @@
             <label for="exampleInputPassword1" class="form-label">Password</label>
             <input placeholder="password" [(ngModel)]="user.password" type="password" class="form-control" id="exampleInputPassword1">
         </div>
+        <div *ngIf="passusererror" style="color: red;">
+            Verifique que el usuario y contraseña sean correctos
+        </div>
         <button type="submit" class="form-control btn btn-primary" (click)="login()">Iniciar sesión</button>
+        <a href=".">Volver</a>
     </div>
 </div>

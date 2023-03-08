@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/internal/Observable';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +10,8 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  get(){
-    return this.http.get('http://localhost:8080/api/public/resources');
-    //return this.http.get('/assets/json/example.json');
+  get(): Observable<{}>{
+    return this.http.get(environment.apiUrl + '/public/resources');
   }
 
 }

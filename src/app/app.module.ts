@@ -17,7 +17,7 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     AppRoutingModule,
     FeatureModule, 
-    SharedModule
+    SharedModule,
   ],
   providers: [
     CookieService,

@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { Experience } from '../../model/model';
 import { ExperienceService } from '../../service/experience.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-experience-card',
@@ -36,23 +37,46 @@ export class ExperienceCardComponent implements OnInit {
   editting = false;
   saving = false;
 
+  @Input() index = "";
+
   constructor(private experienceService: ExperienceService, private ref: ElementRef) {
    }
 
   ngOnInit(): void {
     this.saved = this.data.id != null;
+    this.index = this.ref.nativeElement.getAttribute('id');
   }
 
   delete(confirm: boolean) {
-    let index = parseInt(this.ref.nativeElement.getAttribute('id'));
-    alert(index);
+    /*let index = parseInt(this.ref.nativeElement.getAttribute('id'));
+    console.log("Se procedió a eliminar elemento con id: " + index);
     if (confirm && this.data.id != null) {
       this.experienceService.delete(this.data.id).subscribe(res => {
         this.deleteEvent.emit(index);
       });
     } else if (confirm) {
       this.deleteEvent.emit(index);
-    }
+    }*/
+    let index = parseInt(this.ref.nativeElement.getAttribute('id'));
+    Swal.fire({
+      title: 'Estás seguro?',
+      text: "Estas apunto de eliminar una experiencia, deseas continuar?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, deseo continuar',
+      background: "rgba(33, 37, 41)"
+    }).then((result) => {
+      if (result.isConfirmed) {
+       if (this.data.id != null){
+        this.experienceService.delete(this.data.id).subscribe(res => {
+          //Ignore?
+        });
+       }
+       this.deleteEvent.emit(index);
+      }
+    });
   }
 
   edit() {

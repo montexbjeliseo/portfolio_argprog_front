@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-confirmation-modal',
@@ -12,10 +12,12 @@ export class ConfirmationModalComponent implements OnInit {
 
   @Input() title = "Modal Title";
   @Input() body = "Modal Body";
+  @Input() modalId = "";
 
-  constructor() { }
+  constructor(private ref: ElementRef) { }
 
   ngOnInit(): void {
+    console.log(this.ref.nativeElement.getAttribute("data-bs-target"));
   }
 
   ok(){
