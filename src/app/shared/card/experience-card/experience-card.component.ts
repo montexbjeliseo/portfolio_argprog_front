@@ -48,15 +48,6 @@ export class ExperienceCardComponent implements OnInit {
   }
 
   delete(confirm: boolean) {
-    /*let index = parseInt(this.ref.nativeElement.getAttribute('id'));
-    console.log("Se procedió a eliminar elemento con id: " + index);
-    if (confirm && this.data.id != null) {
-      this.experienceService.delete(this.data.id).subscribe(res => {
-        this.deleteEvent.emit(index);
-      });
-    } else if (confirm) {
-      this.deleteEvent.emit(index);
-    }*/
     let index = parseInt(this.ref.nativeElement.getAttribute('id'));
     Swal.fire({
       title: 'Estás seguro?',
@@ -69,12 +60,12 @@ export class ExperienceCardComponent implements OnInit {
       background: "rgba(33, 37, 41)"
     }).then((result) => {
       if (result.isConfirmed) {
-       if (this.data.id != null){
-        this.experienceService.delete(this.data.id).subscribe(res => {
-          //Ignore?
-        });
-       }
-       this.deleteEvent.emit(index);
+        if (this.data.id != null){
+          this.experienceService.delete(this.data.id).subscribe(res => {
+            //Ignore?
+          });
+        }
+        this.deleteEvent.emit(index);
       }
     });
   }

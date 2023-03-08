@@ -1,5 +1,14 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { 
+  Component, 
+  OnInit, 
+  Input, 
+  ViewChild, 
+  ElementRef,
+  EventEmitter,
+  Output 
+} from '@angular/core';
 import { EducationService } from '../../service/education.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-education-card',
@@ -8,6 +17,11 @@ import { EducationService } from '../../service/education.service';
 })
 export class EducationCardComponent implements OnInit {
   
+  @Output('delete')
+  deleteEvent = new EventEmitter<number>();
+  @Output('save')
+  saveEvent = new EventEmitter();
+
   @Input() data: any;
 
   @ViewChild("title") title!: ElementRef;
@@ -20,7 +34,7 @@ export class EducationCardComponent implements OnInit {
   visible = true;
   editting = false;
 
-  constructor(private educationService: EducationService) { }
+  constructor(private educationService: EducationService, private ref: ElementRef) { }
 
   ngOnInit(): void {
   }
@@ -45,6 +59,29 @@ export class EducationCardComponent implements OnInit {
 
   hide() {
     this.visible = false;
+  }
+
+  delete(confirm: boolean) {
+    let index = parseInt(this.ref.nativeElement.getAttribute('id'));
+    Swal.fire({
+      title: 'Estás seguro?',
+      text: "Estas apunto de eliminar una educacion, deseas continuar?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, deseo continuar',
+      background: "rgba(33, 37, 41)"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (this.data.id != null){
+          this.educationService.delete(this.data.id).subscribe(res => {
+            //Ignore?
+          });
+        }
+        this.deleteEvent.emit(index);
+      }
+    });
   }
 
   reset() {

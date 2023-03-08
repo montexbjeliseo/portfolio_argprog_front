@@ -20,4 +20,7 @@ export class EducationSectionComponent implements OnInit {
     this.data.push(EducationSample);
   }
   
+  delete(index: number) {
+    this.data.splice(index, 1);
+  }
 }
