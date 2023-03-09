@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-6 col-md-4">
 			<div class="fullname">
-				<div class="buttons">
+				<div class="buttons" *ngIf="authService.getToken();">
 					<app-edit-button *ngIf="edittingName==false" (click)="editName();"></app-edit-button>
 					<ng-container *ngIf="edittingName==true">
 						<app-v-button (click)="saveName();"></app-v-button>
@@ -13,19 +13,27 @@
 					</ng-container>
 				</div>
 				<div class="h3">
-					{{data.lastName}}, {{data.firstName}}
+					<span [attr.contenteditable]="edittingName" #lastName>{{data.lastName}}</span>,
+					<span [attr.contenteditable]="edittingName" #firstName>{{data.firstName}}</span>
 				</div>
 			</div>
 			<h4>Full Stack Developer: Java/Angular</h4>
 			<div>
+				<div class="buttons" *ngIf="authService.getToken();">
+					<app-edit-button *ngIf="edittingContact==false" (click)="editContact();"></app-edit-button>
+					<ng-container *ngIf="edittingContact==true">
+						<app-v-button (click)="saveContact();"></app-v-button>
+						<app-x-button (click)="resetContact();"></app-x-button>
+					</ng-container>
+				</div>
 				<ul>
-					<li>Email: {{data.email}}</li>
-					<li>Tel: {{data.phoneNumber}}</li>
+					<li>Email: <span [attr.contenteditable]="edittingContact" #email>{{data.email}}</span></li>
+					<li>Tel: <span [attr.contenteditable]="edittingContact" #phoneNumber>{{data.phoneNumber}}</span></li>
 				</ul>
 			</div>
 		</div>
 		<div class="col-md-8">
-			<div class="buttons">
+			<div class="buttons" *ngIf="authService.getToken();">
 				<app-edit-button *ngIf="edittingAbout==false" (click)="editAbout();"></app-edit-button>
 				<ng-container *ngIf="edittingAbout==true">
 					<app-v-button (click)="saveAbout();"></app-v-button>
@@ -33,7 +41,7 @@
 				</ng-container>
 			</div>
 			<h3>Sobre mí</h3>
-			<div>
+			<div [attr.contenteditable]="edittingAbout" #aboutMe>
 				{{data.about}}
 			</div>
 		</div>

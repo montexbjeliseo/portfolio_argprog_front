@@ -17,8 +17,11 @@
                     </li>
                     <li>|</li>
                     <li>
-                        <a href="./login" class="nav-link text-white">
+                        <a href="./login" class="nav-link text-white" *ngIf="!authService.getToken()">
                             <i class="bi bi-box-arrow-in-left"></i>
+                        </a>
+                        <a href="#logout" (click)="authService.logout();" class="nav-link text-white" *ngIf="authService.getToken()">
+                            <i class="bi bi-box-arrow-in-right"></i>
                         </a>
                     </li>
                 </ul>

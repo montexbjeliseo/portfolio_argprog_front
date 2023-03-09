@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
@@ -8,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 export class AuthService {
 
-	constructor(private http: HttpClient, private cookies: CookieService) { }
+	constructor(private http: HttpClient, private cookies: CookieService, private router: Router) { }
 
 	login(user: any) {
 		return this.http.post('http://localhost:8080/api/auth/login', user);
@@ -20,7 +21,7 @@ export class AuthService {
 		return this.cookies.get('token');
 	}
 	isLogged(): boolean {
-		return this.getToken() !== null;
+		return this.getToken() != null;
 	}
 
 	getAuthHeader(): HttpHeaders {
@@ -28,5 +29,10 @@ export class AuthService {
 		/*headers.set('Access-Control-Allow-Origin', '*');
 		headers.set('Access-Control-Allow-Credentials', 'true');*/
 		return headers;
+	}
+
+	logout(){
+		this.cookies.delete('token');
+		this.router.navigate(['/']);
 	}
 }

@@ -14,4 +14,24 @@ export class DataService {
     return this.http.get(environment.apiUrl + '/public/resources');
   }
 
+  changeName(firstName: string, lastName: string): Observable<{}>{
+    return this.http.post(environment.apiUrl + '/about', { 
+      firstName: firstName,
+      lastName: lastName
+     });
+  }
+
+  changeAbout(about: string): Observable<{}>{
+    return this.http.post(environment.apiUrl + "/about", {
+      about: about
+    });
+  }
+
+  changeContact(email: string, phoneNumber: string): Observable<{}>{
+    return this.http.post(environment.apiUrl + "/about", {
+      email: email,
+      phoneNumber: phoneNumber
+    });
+  }
+
 }
