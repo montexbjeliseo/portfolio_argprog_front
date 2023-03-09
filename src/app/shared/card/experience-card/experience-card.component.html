@@ -1,5 +1,5 @@
 <div class="row m-4">
-    <div class="buttons">
+    <div class="buttons" *ngIf="authService.getToken()">
         <app-warning-badge *ngIf="!saved" [text]="'Hay cambios sin guardar'"></app-warning-badge>
         <app-loading-spinner *ngIf="saving"></app-loading-spinner>
         <ng-container *ngIf="editting==false">
@@ -20,10 +20,4 @@
         <div class="h4" [attr.contenteditable]="editting" #institution>{{data.institution}}</div>
         <div [attr.contenteditable]="editting" #aboutInstitution>{{data.aboutInstitution}}</div>
     </div>
-    <app-confirmation-modal 
-    [title]="'Eliminar experiencia'" 
-    [body]="'¿Está seguro que desea eliminar este recurso?'"
-    [modalId]="index"
-    (confirm)="delete($event);">
-    </app-confirmation-modal>
 </div>

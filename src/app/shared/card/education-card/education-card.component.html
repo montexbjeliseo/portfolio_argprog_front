@@ -1,5 +1,5 @@
 <div *ngIf="visible==true" class="row m-1">
-    <div class="buttons">
+    <div class="buttons" *ngIf="authService.getToken()">
         <ng-container *ngIf="editting==false">
             <app-edit-button (click)="edit();"></app-edit-button>
             <app-delete-button (click)="delete(false);"></app-delete-button>
@@ -18,5 +18,4 @@
         <div class="h4" [attr.contenteditable]=editting #institution>{{data.institution}}</div>
         <div [attr.contenteditable]=editting #aboutInstitution>{{data.aboutInstitution}}</div>
     </div>
-    <app-confirmation-modal></app-confirmation-modal>
 </div>

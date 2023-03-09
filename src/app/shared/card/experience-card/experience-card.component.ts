@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { Experience } from '../../model/model';
 import { ExperienceService } from '../../service/experience.service';
+import { AuthService } from '../../service/auth.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -39,7 +40,7 @@ export class ExperienceCardComponent implements OnInit {
 
   @Input() index = "";
 
-  constructor(private experienceService: ExperienceService, private ref: ElementRef) {
+  constructor(private experienceService: ExperienceService, private ref: ElementRef, public authService: AuthService) {
    }
 
   ngOnInit(): void {

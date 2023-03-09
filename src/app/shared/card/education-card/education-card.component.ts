@@ -8,6 +8,7 @@ import {
   Output 
 } from '@angular/core';
 import { EducationService } from '../../service/education.service';
+import { AuthService } from '../../service/auth.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -34,7 +35,7 @@ export class EducationCardComponent implements OnInit {
   visible = true;
   editting = false;
 
-  constructor(private educationService: EducationService, private ref: ElementRef) { }
+  constructor(private educationService: EducationService, private ref: ElementRef, public authService: AuthService) { }
 
   ngOnInit(): void {
   }
