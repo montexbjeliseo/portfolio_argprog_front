@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Experience } from '../../model/model';
 import { ExperienceSample } from '../../model/sample';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-experience-section',
@@ -11,7 +12,7 @@ export class ExperienceSectionComponent implements OnInit {
 
   @Input() data!: Experience[];
 
-  constructor() { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit(): void {
   }

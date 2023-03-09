@@ -3,7 +3,7 @@
     <ng-container *ngFor="let education of data; let i = index">
         <app-education-card [data]="education" [attr.id]="i" (delete)="delete(i);"></app-education-card>
     </ng-container>
-    <div class="p-3 d-flex justify-content-center">
+    <div class="p-3 d-flex justify-content-center" *ngIf="authService.getToken();">
         <app-add-button (click)="add();"></app-add-button>
     </div>
 </div>

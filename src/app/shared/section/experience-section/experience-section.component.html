@@ -5,7 +5,7 @@
             <app-experience-card [data]="experience" [attr.id]="i" (delete)="delete(i);"></app-experience-card>
         </ng-container>
     </ng-container>
-    <div class="p-3 d-flex justify-content-center">
+    <div class="p-3 d-flex justify-content-center" *ngIf="authService.getToken();">
         <app-add-button (click)="add();"></app-add-button>
     </div>
     <ng-template #nocontent>

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Education } from '../../model/model';
 import { EducationSample } from '../../model/sample';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-education-section',
@@ -11,7 +12,7 @@ export class EducationSectionComponent implements OnInit {
 
   @Input() data!: Education[];
 
-  constructor() { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit(): void {
   }
