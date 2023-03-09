@@ -13,7 +13,7 @@ export class AuthService {
 	constructor(private http: HttpClient, private cookies: CookieService, private router: Router) { }
 
 	login(user: any) {
-		return this.http.post(environment.apiUrl + '/api/auth/login', user);
+		return this.http.post(environment.apiUrl + '/auth/login', user);
 	}
 	setToken(token: string) {
 		this.cookies.set('token', token);
