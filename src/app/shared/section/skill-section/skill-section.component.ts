@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Skill } from '../../model/model';
 import { SkillSample } from '../../model/sample';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-skill-section',
@@ -11,7 +12,7 @@ export class SkillSectionComponent implements OnInit {
 
   @Input() data!: Skill[];
 
-  constructor() { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit(): void {
   }

@@ -1,7 +1,16 @@
 <div class="border rounder-3 container-fluid bg-dark">
 	<img src="assets/img/banner.jpg" style="width:100%;object-fit: cover;">
-	<img src="assets/img/profile.png" class="rounded-circle profile-img"
-		style="margin-top: -100px;width: 200px; background-color: #ddd;">
+	<div style="margin-top: -100px; width: 200px;">
+		<img src="assets/img/profile.png" class="rounded-circle profile-img" style="background-color: #ddd;width: 100%; box-sizing: border-box; object-fit: cover;">
+		<div class="buttons" style="margin-top: -30px;" *ngIf="authService.getToken();">
+			<app-edit-button *ngIf="edittingName==false" (click)="editName();"></app-edit-button>
+			<ng-container *ngIf="edittingName==true">
+				<app-v-button (click)="saveName();"></app-v-button>
+				<app-x-button (click)="resetName();"></app-x-button>
+			</ng-container>
+		</div>
+	</div>
+	
 	<div class="row">
 		<div class="col-6 col-md-4">
 			<div class="fullname">
