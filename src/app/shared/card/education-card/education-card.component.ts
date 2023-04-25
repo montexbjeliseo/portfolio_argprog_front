@@ -58,15 +58,11 @@ export class EducationCardComponent implements OnInit {
     });
   }
 
-  hide() {
-    this.visible = false;
-  }
-
   delete(confirm: boolean) {
     let index = parseInt(this.ref.nativeElement.getAttribute('id'));
     Swal.fire({
       title: 'Estás seguro?',
-      text: "Estas apunto de eliminar una educacion, deseas continuar?",
+      text: "Estas apunto de eliminar una educacion, ¿deseas continuar?",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

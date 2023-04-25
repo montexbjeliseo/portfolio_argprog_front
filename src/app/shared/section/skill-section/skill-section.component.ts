@@ -21,4 +21,8 @@ export class SkillSectionComponent implements OnInit {
     this.data.push(SkillSample);
   }
 
+  delete(index: number) {
+    this.data.splice(index, 1);
+  }
+
 }

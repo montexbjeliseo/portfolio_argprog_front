@@ -1,4 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, ElementRef, EventEmitter } from '@angular/core';
+import Swal from 'sweetalert2';
+import { ProjectService } from '../../service/project.service';
+import { Project } from '../../model/model';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-project-card',
@@ -9,22 +13,102 @@ export class ProjectCardComponent implements OnInit {
 
   @Input() data: any;
 
+  @Output('delete')
+  deleteEvent = new EventEmitter<number>();
+
   editting = false;
   visible = true;
 
-  constructor() { }
+  constructor(private ref: ElementRef, private projectService: ProjectService, public authService: AuthService) { }
 
   ngOnInit(): void {
   }
 
-  hide(){
-    this.visible = false;
+  getIndex() {
+    return parseInt(this.ref.nativeElement.getAttribute('id'));
   }
 
-  edit(){}
+  edit() {
+    let that = this;
+    // Crea el HTML del formulario
+    let title_id = `project_title${this.getIndex()}`;
+    let description_id = `project_description${this.getIndex()}`;
+    let photo_id = `project_photo${this.getIndex()}`;
+    let institution_id = `project_institution${this.getIndex()}`;
+    let about_institution_id = `project_about_institution${this.getIndex()}`;
+    const form = `
+      <form>
+        <label>Nombre del Proyecto: <input type="text" id="${title_id}" value="${this.data.title}" required></label>
+        <label>Descripcion del Proyecto: <input type="text" id="${description_id}" value="${this.data.description}" required></label>
+        <label>Foto del Proyecto: <input type="text" id="${photo_id}" value="${this.data.photo}" required></label>
+        <label>Organizacion: <input type="text" id="${institution_id}" value="${this.data.institution}" required></label>
+        <label>Acerca de la Organización: <input type="text" id="${about_institution_id}" value="${this.data.aboutInstitution}" required></label>
+      </form>
+    `;
 
-  save(){}
+    // Muestra SweetAlert2 con el formulario personalizado
+    Swal.fire({
+      title: 'Editar habilidad',
+      html: form,
+      confirmButtonText: 'Guardar',
+      focusConfirm: false,
+      background: "rgba(33, 37, 41)",
+      preConfirm: () => {
+        // Obtiene los valores del formulario
+        const title = (document.getElementById(title_id) as HTMLInputElement).value;
+        const description = (document.getElementById(description_id) as HTMLSelectElement).value;
+        const photo = (document.getElementById(photo_id) as HTMLSelectElement).value;
+        const institution = (document.getElementById(institution_id) as HTMLSelectElement).value;
+        const about_institution = (document.getElementById(about_institution_id) as HTMLSelectElement).value;
 
-  reset(){}
+        // Valida si los campos tienen un valor válido
+        if (!title || !description) {
+          Swal.showValidationMessage('Complete todos los campos requeridos');
+        }
 
+        // Retorna un objeto con los valores del formulario
+        return { 
+          id: this.data.id, 
+          title: title, 
+          description: description,
+          photo: photo,
+          institution: institution,
+          aboutInstitution: about_institution,
+          indexPosition: 0
+        };
+      }
+    }).then((result) => {
+      // Muestra los resultados obtenidos al enviar el formulario
+      if (result.isConfirmed) {
+        this.projectService.save(result.value as Project).subscribe(res=>{
+          this.data = res;
+        },
+        error =>{
+          console.log("Error", error);
+        });
+      }
+    });
+  }
+  delete() {
+    let index = parseInt(this.ref.nativeElement.getAttribute('id'));
+    Swal.fire({
+      title: 'Estás seguro?',
+      text: "Estás apunto de eliminar un proyecto. ¿Deseas continuar?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, deseo continuar',
+      background: "rgba(33, 37, 41)"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (this.data.id != null) {
+          this.projectService.delete(this.data.id).subscribe(res => {
+            //Ignore?
+          });
+        }
+        this.deleteEvent.emit(index);
+      }
+    });
+  }
 }

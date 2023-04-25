@@ -1,9 +1,11 @@
 <div class="border rounded-3 container-fluid">
     <h2>Proyectos</h2>
-    <ng-container  *ngFor="let project of data">
-        <app-project-card [data]="project"></app-project-card>
+    <ng-container *ngIf="data.length!=0; else nocontent">
+        <ng-container  *ngFor="let project of data; let i = index">
+            <app-project-card [data]="project" [attr.id]="i" (delete)="delete(i)"></app-project-card>
+        </ng-container>
     </ng-container>
-    <div class="p-3 d-flex justify-content-center">
+    <div class="p-3 d-flex justify-content-center" *ngIf="authService.getToken();">
         <app-add-button (click)="add();"></app-add-button>
     </div>
     <ng-template #nocontent>
