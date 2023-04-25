@@ -19,7 +19,7 @@ import { Skill } from '../../model/model';
 })
 export class SkillCardComponent implements OnInit {
 
-  @Input() data!: any;
+  @Input() data!: Skill;
 
   @Output('delete')
   deleteEvent = new EventEmitter<number>();
@@ -32,7 +32,7 @@ export class SkillCardComponent implements OnInit {
   }
 
   delete() {
-    let index = parseInt(this.ref.nativeElement.getAttribute('id'));
+    let index = this.getIndex();
     Swal.fire({
       title: 'Estás seguro?',
       text: "Estas apunto de eliminar una educacion, deseas continuar?",
@@ -101,14 +101,14 @@ export class SkillCardComponent implements OnInit {
         return { 
           id: this.data.id,
           name: name, 
-          level: level 
+          description: level 
         };
       }
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
-        this.skillService.save({name: result.value?.name, description: result.value?.level} as Skill).subscribe(res=>{
-          this.data = res;
+        this.skillService.save(result.value as Skill).subscribe(res=>{
+          this.data = res as Skill;
         },
         error =>{
           console.log("Error", error);
