@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-delete-button',
@@ -7,10 +7,10 @@ import { Component, OnInit, Input, ElementRef } from '@angular/core';
 })
 export class DeleteButtonComponent implements OnInit {
 
-  constructor(private ref: ElementRef) { }
+  constructor() { }
 
   ngOnInit(): void {
-    console.log(this.ref.nativeElement.getAttribute('data-bs-target'));
+
   }
 
 }

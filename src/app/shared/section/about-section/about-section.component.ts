@@ -33,6 +33,53 @@ export class AboutSectionComponent implements OnInit {
     this.edittingName = true;
   }
 
+  changePhotoLink(){
+    let that = this;
+    // Crea el HTML del formulario
+    const form = `
+      <form>
+        <label>Enlace: </label>
+        <br>
+        <input type="text" id="photo_link_id" value="${this.data.photo}" required>
+      </form>
+    `;
+
+    // Muestra SweetAlert2 con el formulario personalizado
+    Swal.fire({
+      title: 'Editar habilidad',
+      html: form,
+      confirmButtonText: 'Guardar',
+      focusConfirm: false,
+      background: "rgba(33, 37, 41)",
+      preConfirm: () => {
+        // Obtiene los valores del formulario
+        const photo_link = (document.getElementById("photo_link_id") as HTMLInputElement).value;
+
+        // Valida si los campos tienen un valor válido
+        if (!photo_link) {
+          Swal.showValidationMessage('Complete todos los campos requeridos');
+        }
+
+        // Retorna un objeto con los valores del formulario
+        return photo_link;
+      }
+    }).then((result) => {
+      // Muestra los resultados obtenidos al enviar el formulario
+      if (result.isConfirmed) {
+        this.dataService.changePhotoLink(result.value as string).subscribe(res=>{
+          this.data = res;
+        },
+        error =>{
+          console.log("Error", error);
+        });
+      }
+    });
+  }
+
+  getPhotoLink():string {
+    return this.data.photo ?? 'assets/img/profile.png';
+  }
+
   saveName(){
     this.edittingName = false;
     this.dataService.changeName(

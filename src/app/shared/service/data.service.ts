@@ -14,6 +14,12 @@ export class DataService {
     return this.http.get(environment.apiUrl + '/public/resources');
   }
 
+  changePhotoLink(link: string): Observable<{}>{
+    return this.http.post(environment.apiUrl + '/about', {
+      photo: link
+    });
+  }
+
   changeName(firstName: string, lastName: string): Observable<{}>{
     return this.http.post(environment.apiUrl + '/about', { 
       firstName: firstName,

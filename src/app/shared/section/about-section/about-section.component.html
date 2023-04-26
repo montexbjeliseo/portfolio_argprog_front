@@ -1,13 +1,10 @@
 <div class="border rounder-3 container-fluid bg-dark">
 	<img src="assets/img/banner.jpg" style="width:100%;object-fit: cover;">
 	<div style="margin-top: -100px; width: 200px;">
-		<img src="assets/img/profile.png" class="rounded-circle profile-img" style="background-color: #ddd;width: 100%; box-sizing: border-box; object-fit: cover;">
+			<img src="{{data.photo??'assets/img/profile.png'}}" class="rounded-circle profile-img" 
+			style="background-color: #ddd;width: 100%; box-sizing: border-box; object-fit: cover;">
 		<div class="buttons" style="margin-top: -30px;" *ngIf="authService.getToken();">
-			<app-edit-button *ngIf="edittingName==false" (click)="editName();"></app-edit-button>
-			<ng-container *ngIf="edittingName==true">
-				<app-v-button (click)="saveName();"></app-v-button>
-				<app-x-button (click)="resetName();"></app-x-button>
-			</ng-container>
+			<app-edit-button (click)="changePhotoLink();"></app-edit-button>
 		</div>
 	</div>
 	
@@ -29,7 +26,8 @@
 			<h4>Full Stack Developer: Java/Angular</h4>
 			<div>
 				<div class="buttons" *ngIf="authService.getToken();">
-					<app-edit-button *ngIf="edittingContact==false" (click)="editContact();"></app-edit-button>
+					<app-edit-button *ngIf="edittingContact==false" (click)="editContact();">
+					</app-edit-button>
 					<ng-container *ngIf="edittingContact==true">
 						<app-v-button (click)="saveContact();"></app-v-button>
 						<app-x-button (click)="resetContact();"></app-x-button>
