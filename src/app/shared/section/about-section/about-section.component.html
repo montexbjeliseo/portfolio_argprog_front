@@ -12,43 +12,31 @@
 		<div class="col-6 col-md-4">
 			<div class="fullname">
 				<div class="buttons" *ngIf="authService.getToken();">
-					<app-edit-button *ngIf="edittingName==false" (click)="editName();"></app-edit-button>
-					<ng-container *ngIf="edittingName==true">
-						<app-v-button (click)="saveName();"></app-v-button>
-						<app-x-button (click)="resetName();"></app-x-button>
-					</ng-container>
+					<app-edit-button (click)="changeNames();"></app-edit-button>
 				</div>
 				<div class="h3">
-					<span [attr.contenteditable]="edittingName" #lastName>{{data.lastName}}</span>,
-					<span [attr.contenteditable]="edittingName" #firstName>{{data.firstName}}</span>
+					<span>{{data.lastName}}</span>,
+					<span>{{data.firstName}}</span>
 				</div>
 			</div>
 			<h4>Full Stack Developer: Java/Angular</h4>
 			<div>
 				<div class="buttons" *ngIf="authService.getToken();">
-					<app-edit-button *ngIf="edittingContact==false" (click)="editContact();">
+					<app-edit-button (click)="changeContact();">
 					</app-edit-button>
-					<ng-container *ngIf="edittingContact==true">
-						<app-v-button (click)="saveContact();"></app-v-button>
-						<app-x-button (click)="resetContact();"></app-x-button>
-					</ng-container>
 				</div>
 				<ul>
-					<li>Email: <span [attr.contenteditable]="edittingContact" #email>{{data.email}}</span></li>
-					<li>Tel: <span [attr.contenteditable]="edittingContact" #phoneNumber>{{data.phoneNumber}}</span></li>
+					<li>Email: <span>{{data.email}}</span></li>
+					<li>Tel: <span>{{data.phoneNumber}}</span></li>
 				</ul>
 			</div>
 		</div>
 		<div class="col-md-8">
 			<div class="buttons" *ngIf="authService.getToken();">
-				<app-edit-button *ngIf="edittingAbout==false" (click)="editAbout();"></app-edit-button>
-				<ng-container *ngIf="edittingAbout==true">
-					<app-v-button (click)="saveAbout();"></app-v-button>
-					<app-x-button (click)="resetAbout();"></app-x-button>
-				</ng-container>
+				<app-edit-button (click)="editAbout();"></app-edit-button>
 			</div>
 			<h3>Sobre mí</h3>
-			<div [attr.contenteditable]="edittingAbout" #aboutMe>
+			<div>
 				{{data.about}}
 			</div>
 		</div>

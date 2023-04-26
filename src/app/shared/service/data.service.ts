@@ -20,7 +20,7 @@ export class DataService {
     });
   }
 
-  changeName(firstName: string, lastName: string): Observable<{}>{
+  changeNames(firstName: string|undefined, lastName: string|undefined): Observable<{}>{
     return this.http.post(environment.apiUrl + '/about', { 
       firstName: firstName,
       lastName: lastName
