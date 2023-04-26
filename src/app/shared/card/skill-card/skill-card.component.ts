@@ -116,5 +116,4 @@ export class SkillCardComponent implements OnInit {
       }
     });
   }
-
 }
