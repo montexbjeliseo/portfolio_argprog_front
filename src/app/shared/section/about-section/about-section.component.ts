@@ -36,6 +36,7 @@ export class AboutSectionComponent implements OnInit {
       confirmButtonText: 'Guardar',
       focusConfirm: false,
       background: "rgba(33, 37, 41)",
+      showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
         const photo_link = (document.getElementById("photo_link_id") as HTMLInputElement).value;
