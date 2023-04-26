@@ -33,7 +33,7 @@ export class DataService {
     });
   }
 
-  changeContact(email: string, phoneNumber: string): Observable<{}>{
+  changeContact(email: string|undefined, phoneNumber: string|undefined): Observable<{}>{
     return this.http.post(environment.apiUrl + "/about", {
       email: email,
       phoneNumber: phoneNumber

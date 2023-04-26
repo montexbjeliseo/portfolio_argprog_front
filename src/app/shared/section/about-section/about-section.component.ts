@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
 import { DataService } from '../../service/data.service';
 import Swal  from 'sweetalert2';
@@ -10,6 +10,8 @@ import Swal  from 'sweetalert2';
 })
 export class AboutSectionComponent implements OnInit {
 
+  DESCRIPTION_PATTERN = /^[a-zA-ZÀ-ÿ0-9+\*\?\¿\¡\!\.\"s:\-*@\\\/%=#\$\|<>\(\)\[\]\^,&'\n]*$/;
+
   @Input() data: any;
 
   constructor(public authService: AuthService, private dataService: DataService) { }
@@ -18,7 +20,6 @@ export class AboutSectionComponent implements OnInit {
   }
 
   changePhotoLink(){
-    let that = this;
     // Crea el HTML del formulario
     const changePhotoLinkForm = `
       <form>
@@ -50,18 +51,20 @@ export class AboutSectionComponent implements OnInit {
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
-        this.dataService.changePhotoLink(result.value as string).subscribe(res=>{
-          this.data = res;
-        },
-        error =>{
-          this.alertError();
+        this.dataService.changePhotoLink(result.value as string).subscribe({
+          next: (v) => {
+            this.data = v;
+            this.alertSuccess("El enlace se actualizó correctamente")
+          },
+          error: (e) => {
+            this.alertError(e as string);
+          }
         });
       }
     });
   }
 
   changeNames(){
-    let that = this;
     // Crea el HTML del formulario
     const changeNamesForm = `
       <form>
@@ -108,7 +111,7 @@ export class AboutSectionComponent implements OnInit {
             this.alertSuccess("Los nombres se actualizaron correctamente")
           },
           error: (e) => {
-            this.alertError();
+            this.alertError(e as string);
           }
         });
       }
@@ -121,15 +124,13 @@ export class AboutSectionComponent implements OnInit {
       <form>
         <label>Sobre mí: </label>
         <br>
-        <textarea type="text" id="profile_about_id" rows="5" cols="10" required>
-        ${this.data.about}
-        </textarea>
+        <textarea type="text" id="profile_about_id" rows="5" cols="50" required>${this.data.about}</textarea>
       </form>
     `;
 
     // Muestra SweetAlert2 con el formulario personalizado
     Swal.fire({
-      title: 'Editar sbore mí',
+      title: 'Editar sobre mí',
       html: changeAboutForm,
       confirmButtonText: 'Guardar',
       focusConfirm: false,
@@ -137,11 +138,11 @@ export class AboutSectionComponent implements OnInit {
       showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
-        const aboutValue = (document.getElementById("profile_first_name_id") as HTMLInputElement).value;
+        const aboutValue = (document.getElementById("profile_about_id") as HTMLInputElement).value;
         
         // Valida si los campos tienen un valor válido
-        if (!aboutValue) {
-          Swal.showValidationMessage('Complete todos los campos requeridos');
+        if (!this.DESCRIPTION_PATTERN.test(aboutValue)) {
+          Swal.showValidationMessage('Asegúrese de no haber ingresado caracteres especiales');
         }
 
         // Retorna un objeto con los valores del formulario
@@ -156,27 +157,30 @@ export class AboutSectionComponent implements OnInit {
             this.alertSuccess("\"Sobre mí\" se actualizó correctamente")
           },
           error: (e) => {
-            this.alertError();
+            this.alertError(e as string);
           }
         });
       }
     });
   }
 
-  alertError(){
-    Swal.fire(
-      'Error',
-      'Ocurrió un error',
-      'warning'
-    );
+  alertError(msg: string){
+    Swal.fire({
+      title: 'Error',
+      text: msg,
+      icon: 'warning',
+      background: "rgba(33, 37, 41)"
+    });
   }
 
   alertSuccess(msg: string){
     Swal.fire(
-      'Operación exitosa!',
-      msg,
-      'success'
-    );
+      {
+        title: 'Operación exitosa!',
+        text: msg,
+        icon: 'success',
+        background: "rgba(33, 37, 41)"
+      });
   }
 
   changeContact(){
@@ -187,7 +191,7 @@ export class AboutSectionComponent implements OnInit {
         <br>
         <input type="email" id="profile_email_id" value="${this.data.email}" required>
         <br>
-        <label>Apellido/s: </label>
+        <label>Número de teléfono: </label>
         <br>
         <input type="text" id="profile_phone_number_id" value="${this.data.phoneNumber}" required>
       </form>
@@ -220,13 +224,14 @@ export class AboutSectionComponent implements OnInit {
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
-        this.dataService.changeNames(result.value?.email, result.value?.phoneNumber).subscribe({
+        this.dataService.changeContact(result.value?.email, result.value?.phoneNumber).subscribe({
           next: (v) => {
             this.data = v;
-            this.alertSuccess("Los nombres se actualizaron correctamente")
+            this.alertSuccess("Los datos de contactos se actualizaron correctamente")
           },
           error: (e) => {
-            this.alertError();
+            this.alertError(e.error.email??'' + '\n' + +e.error.phoneNumber??'');
+            console.log(e);
           }
         });
       }
