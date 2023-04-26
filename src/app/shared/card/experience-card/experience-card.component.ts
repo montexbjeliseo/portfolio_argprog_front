@@ -27,25 +27,10 @@ export class ExperienceCardComponent implements OnInit {
   @Input() id!: number;
   @Input() data!: Experience;
 
-  @ViewChild("title") title!: ElementRef;
-  @ViewChild("description") description!: ElementRef;
-  @ViewChild("institution") institution!: ElementRef;
-  @ViewChild("aboutInstitution") aboutInstitution!: ElementRef;
-
-  backup: any = null;
-
-  saved = false;
-  editting = false;
-  saving = false;
-
-  @Input() index = "";
-
   constructor(private experienceService: ExperienceService, private ref: ElementRef, public authService: AuthService) {
    }
 
   ngOnInit(): void {
-    this.saved = this.data.id != null;
-    this.index = this.ref.nativeElement.getAttribute('id');
   }
 
   delete(confirm: boolean) {
@@ -71,36 +56,90 @@ export class ExperienceCardComponent implements OnInit {
     });
   }
 
-  edit() {
-    this.backup = this.data;
-    this.editting = true;
-    this.saved = false;
+  getIndex(){
+    return parseInt(this.ref.nativeElement.getAttribute('id'));
   }
 
-  save() {
-    this.saving = true;
-    this.data.title = this.title.nativeElement.innerText;
-    this.data.description = this.description.nativeElement.innerText;
-    this.data.institution = this.institution.nativeElement.innerText;
-    this.data.aboutInstitution = this.aboutInstitution.nativeElement.innerText;
-    this.editting = false;
-    this.experienceService.save(this.data).subscribe(res => {
-      this.backup = res;
-      this.data = (res as Experience);
-      this.reset();
-      this.saved = true;
-      this.saving = false;
-      this.saveEvent.emit();
+  edit() {
+    // Crea el HTML del formulario
+    let title_id = `experience_title${this.getIndex()}`;
+    let description_id = `experience_description${this.getIndex()}`;
+    let photo_id = `experience_photo${this.getIndex()}`;
+    let institution_id = `experience_institution${this.getIndex()}`;
+    let about_institution_id = `experience_about_institution${this.getIndex()}`;
+
+    const form = `
+      <form>
+        <label>Nombre del Puesto: <input type="text" id="${title_id}" value="${this.data.title}" required></label>
+        <label>Descripcion del Puesto: <input type="text" id="${description_id}" value="${this.data.description}" required></label>
+        <label>Foto relacionada: <input type="text" id="${photo_id}" value="${this.data.photo}" required></label>
+        <label>Organizacion: <input type="text" id="${institution_id}" value="${this.data.institution}" required></label>
+        <label>Acerca de la Organización: <input type="text" id="${about_institution_id}" value="${this.data.aboutInstitution}" required></label>
+      </form>
+    `;
+
+    // Muestra SweetAlert2 con el formulario personalizado
+    Swal.fire({
+      title: 'Editar Experiencia',
+      html: form,
+      confirmButtonText: 'Guardar',
+      focusConfirm: false,
+      background: "rgba(33, 37, 41)",
+      preConfirm: () => {
+        // Obtiene los valores del formulario
+        const title = (document.getElementById(title_id) as HTMLInputElement).value;
+        const description = (document.getElementById(description_id) as HTMLSelectElement).value;
+        const photo = (document.getElementById(photo_id) as HTMLSelectElement).value;
+        const institution = (document.getElementById(institution_id) as HTMLSelectElement).value;
+        const about_institution = (document.getElementById(about_institution_id) as HTMLSelectElement).value;
+
+        // Valida si los campos tienen un valor válido
+        if (!title || !description) {
+          Swal.showValidationMessage('Complete todos los campos requeridos');
+        }
+
+        // Retorna un objeto con los valores del formulario
+        return { 
+          id: this.data.id, 
+          title: title, 
+          description: description,
+          photo: photo,
+          institution: institution,
+          aboutInstitution: about_institution,
+          indexPosition: 0
+        };
+      }
+    }).then((result) => {
+      // Muestra los resultados obtenidos al enviar el formulario
+      if (result.isConfirmed) {
+        this.experienceService.save(result.value as Experience).subscribe({next: (v)=>{
+          this.data = v as Experience;
+          this.alertSuccess("Los datos se actualizaron correctamente")
+        },
+        error: (error) =>{
+          this.alertError("Ocurrió un error");
+        }});
+      }
+    });    
+  }
+
+  alertError(msg: string){
+    Swal.fire({
+      title: 'Error',
+      text: msg,
+      icon: 'warning',
+      background: "rgba(33, 37, 41)"
     });
   }
 
-  reset() {
-    this.title.nativeElement.innerText = this.backup.title;
-    this.description.nativeElement.innerText = this.backup.description;
-    this.institution.nativeElement.innerText = this.backup.institution;
-    this.aboutInstitution.nativeElement.innerText = this.backup.aboutInstitution;
-    this.editting = false;
-    this.saved = this.data.id != null;
+  alertSuccess(msg: string){
+    Swal.fire(
+      {
+        title: 'Operación exitosa!',
+        text: msg,
+        icon: 'success',
+        background: "rgba(33, 37, 41)"
+      });
   }
 
 }
