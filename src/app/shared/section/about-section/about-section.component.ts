@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
 import { DataService } from '../../service/data.service';
-import Swal  from 'sweetalert2';
+import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-about-section',
@@ -10,9 +11,6 @@ import Swal  from 'sweetalert2';
 })
 export class AboutSectionComponent implements OnInit {
 
-  TITLE_PATTERN = /^[\\w\\s\\p{Punct} a-zA-ZáéíóúüÁÉÍÓÚÜñÑ0-9\\-\\+\\?\\*]+$/;
-  DESCRIPTION_PATTERN = /^[\\w\\s\\p{Punct} aA-zZáéíóúüÁÉÍÓÚÜñÑ0-9\\-\\+\\?\\*\\/\\.\\,]+$/; // espacio, coma, punto y punto y coma
-
   @Input() data: any;
 
   constructor(public authService: AuthService, private dataService: DataService) { }
@@ -20,7 +18,7 @@ export class AboutSectionComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  changePhotoLink(){
+  changePhotoLink() {
     // Crea el HTML del formulario
     const changePhotoLinkForm = `
       <form>
@@ -41,12 +39,10 @@ export class AboutSectionComponent implements OnInit {
       preConfirm: () => {
         // Obtiene los valores del formulario
         const photo_link = (document.getElementById("photo_link_id") as HTMLInputElement).value;
-
         // Valida si los campos tienen un valor válido
         if (!photo_link) {
           Swal.showValidationMessage('Complete todos los campos requeridos');
         }
-
         // Retorna un objeto con los valores del formulario
         return photo_link;
       }
@@ -66,7 +62,7 @@ export class AboutSectionComponent implements OnInit {
     });
   }
 
-  changeNames(){
+  changeNames() {
     // Crea el HTML del formulario
     const changeNamesForm = `
       <form>
@@ -77,12 +73,16 @@ export class AboutSectionComponent implements OnInit {
         <label>Apellido/s: </label>
         <br>
         <input type="text" id="profile_last_name_id" value="${this.data.lastName}" required>
+        <br>
+        <label>Puesto/Especialización: </label>
+        <br>
+        <input type="text" id="profile_job_id" value="${this.data.job}" required>
       </form>
     `;
 
     // Muestra SweetAlert2 con el formulario personalizado
     Swal.fire({
-      title: 'Editar nombres y apellido/s',
+      title: 'Editar nombres y apellido/s, titular',
       html: changeNamesForm,
       confirmButtonText: 'Guardar',
       focusConfirm: false,
@@ -92,16 +92,22 @@ export class AboutSectionComponent implements OnInit {
         // Obtiene los valores del formulario
         const firstNameValue = (document.getElementById("profile_first_name_id") as HTMLInputElement).value;
         const lastNameValue = (document.getElementById("profile_last_name_id") as HTMLInputElement).value;
+        const jobValue = (document.getElementById("profile_job_id") as HTMLInputElement).value;
 
         // Valida si los campos tienen un valor válido
-        if (!firstNameValue&&!lastNameValue) {
+        if (!firstNameValue || !lastNameValue || !jobValue) {
           Swal.showValidationMessage('Complete todos los campos requeridos');
+        } else if (!environment.FIRSTNAME_PATTERN.test(firstNameValue) ||
+          !environment.LASTNAME_PATTERN.test(lastNameValue) ||
+          !environment.DESCRIPTION_PATTERN) {
+          Swal.showValidationMessage('Asegúrese de no haber ingresado caracteres especiales o números');
         }
 
         // Retorna un objeto con los valores del formulario
         return {
           firstName: firstNameValue,
-          lastName: lastNameValue
+          lastName: lastNameValue,
+          job: jobValue
         }
       }
     }).then((result) => {
@@ -120,7 +126,7 @@ export class AboutSectionComponent implements OnInit {
     });
   }
 
-  editAbout(){
+  editAbout() {
     // Crea el HTML del formulario
     const changeAboutForm = `
       <form>
@@ -141,9 +147,11 @@ export class AboutSectionComponent implements OnInit {
       preConfirm: () => {
         // Obtiene los valores del formulario
         const aboutValue = (document.getElementById("profile_about_id") as HTMLInputElement).value;
-        
+
         // Valida si los campos tienen un valor válido
-        if (!this.DESCRIPTION_PATTERN.test(aboutValue)) {
+        if(!aboutValue){
+          Swal.showValidationMessage('El campo no puede estar vacío');
+        } else if (!environment.DESCRIPTION_PATTERN.test(aboutValue)) {
           Swal.showValidationMessage('Asegúrese de no haber ingresado caracteres especiales');
         }
 
@@ -166,7 +174,7 @@ export class AboutSectionComponent implements OnInit {
     });
   }
 
-  alertError(msg: string){
+  alertError(msg: string) {
     Swal.fire({
       title: 'Error',
       text: msg,
@@ -175,7 +183,7 @@ export class AboutSectionComponent implements OnInit {
     });
   }
 
-  alertSuccess(msg: string){
+  alertSuccess(msg: string) {
     Swal.fire(
       {
         title: 'Operación exitosa!',
@@ -185,7 +193,7 @@ export class AboutSectionComponent implements OnInit {
       });
   }
 
-  changeContact(){
+  changeContact() {
     // Crea el HTML del formulario
     const changeContactForm = `
       <form>
@@ -213,8 +221,15 @@ export class AboutSectionComponent implements OnInit {
         const phoneNumberValue = (document.getElementById("profile_phone_number_id") as HTMLInputElement).value;
 
         // Valida si los campos tienen un valor válido
-        if (!emailValue&&!phoneNumberValue) {
+        if (!emailValue && !phoneNumberValue) {
           Swal.showValidationMessage('Complete todos los campos requeridos');
+        } else {
+          if (!environment.EMAIL_PATTERN.test(emailValue)) {
+            Swal.showValidationMessage('Formato de e-mail (\"example@mail.com\") inválido');
+          }
+          if (!environment.PHONE_NUMBER_PATTERN.test(phoneNumberValue)) {
+            Swal.showValidationMessage('Formato de número telefónico (\"+000(0000)000000\") inválido');
+          }
         }
 
         // Retorna un objeto con los valores del formulario
@@ -232,7 +247,7 @@ export class AboutSectionComponent implements OnInit {
             this.alertSuccess("Los datos de contactos se actualizaron correctamente")
           },
           error: (e) => {
-            this.alertError(e.error.email??'' + '\n' + +e.error.phoneNumber??'');
+            this.alertError(e.error.email ?? '' + '\n' + +e.error.phoneNumber ?? '');
             console.log(e);
           }
         });
