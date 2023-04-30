@@ -11,6 +11,8 @@ import { SkillService } from '../../service/skill.service';
 import { AuthService } from '../../service/auth.service';
 import Swal from 'sweetalert2';
 import { Skill } from '../../model/model';
+import { environment } from 'src/environments/environment';
+import { alertError, alertSuccess } from '../../util/alerts';
 
 @Component({
   selector: 'app-skill-card',
@@ -87,6 +89,7 @@ export class SkillCardComponent implements OnInit {
       confirmButtonText: 'Guardar',
       focusConfirm: false,
       background: "rgba(33, 37, 41)",
+      showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
         const name = (document.getElementById(name_id) as HTMLInputElement).value;
@@ -95,6 +98,10 @@ export class SkillCardComponent implements OnInit {
         // Valida si los campos tienen un valor válido
         if (!name || !level) {
           Swal.showValidationMessage('Complete todos los campos requeridos');
+        } else {
+          if(!environment.TITLE_PATTERN.test(name)){
+            Swal.showValidationMessage('Nombre: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
+          }
         }
 
         // Retorna un objeto con los valores del formulario
@@ -107,12 +114,14 @@ export class SkillCardComponent implements OnInit {
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
-        this.skillService.save(result.value as Skill).subscribe(
-        res=>{
-          this.data = res as Skill;
-        },
-        error =>{
-          console.log("Error", error);
+        this.skillService.save(result.value as Skill).subscribe({
+          next: (v)=>{
+            this.data = v as Skill;
+            alertSuccess("La habilidad se actualizó con éxito!");
+          },
+          error: (err)=>{
+            alertError("Ocurrió un error al intentar actualizar");
+          }
         });
       }
     });

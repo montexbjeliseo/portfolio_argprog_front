@@ -3,6 +3,7 @@ import { AuthService } from '../../service/auth.service';
 import { DataService } from '../../service/data.service';
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
+import { alertError, alertSuccess } from '../../util/alerts';
 
 @Component({
   selector: 'app-about-section',
@@ -52,10 +53,10 @@ export class AboutSectionComponent implements OnInit {
         this.dataService.changePhotoLink(result.value as string).subscribe({
           next: (v) => {
             this.data = v;
-            this.alertSuccess("El enlace se actualizó correctamente")
+            alertSuccess("El enlace se actualizó correctamente")
           },
           error: (e) => {
-            this.alertError(e as string);
+            alertError(e as string);
           }
         });
       }
@@ -116,10 +117,10 @@ export class AboutSectionComponent implements OnInit {
         this.dataService.changeNames(result.value?.firstName, result.value?.lastName).subscribe({
           next: (v) => {
             this.data = v;
-            this.alertSuccess("Los nombres se actualizaron correctamente")
+            alertSuccess("Los nombres se actualizaron correctamente")
           },
           error: (e) => {
-            this.alertError(e as string);
+            alertError(e as string);
           }
         });
       }
@@ -164,33 +165,14 @@ export class AboutSectionComponent implements OnInit {
         this.dataService.changeAbout(result.value as string).subscribe({
           next: (v) => {
             this.data = v;
-            this.alertSuccess("\"Sobre mí\" se actualizó correctamente")
+            alertSuccess("\"Sobre mí\" se actualizó correctamente")
           },
           error: (e) => {
-            this.alertError(e as string);
+            alertError(e as string);
           }
         });
       }
     });
-  }
-
-  alertError(msg: string) {
-    Swal.fire({
-      title: 'Error',
-      text: msg,
-      icon: 'warning',
-      background: "rgba(33, 37, 41)"
-    });
-  }
-
-  alertSuccess(msg: string) {
-    Swal.fire(
-      {
-        title: 'Operación exitosa!',
-        text: msg,
-        icon: 'success',
-        background: "rgba(33, 37, 41)"
-      });
   }
 
   changeContact() {
@@ -244,10 +226,10 @@ export class AboutSectionComponent implements OnInit {
         this.dataService.changeContact(result.value?.email, result.value?.phoneNumber).subscribe({
           next: (v) => {
             this.data = v;
-            this.alertSuccess("Los datos de contactos se actualizaron correctamente")
+            alertSuccess("Los datos de contactos se actualizaron correctamente")
           },
           error: (e) => {
-            this.alertError(e.error.email ?? '' + '\n' + +e.error.phoneNumber ?? '');
+            alertError(e.error.email ?? '' + '\n' + +e.error.phoneNumber ?? '');
             console.log(e);
           }
         });
