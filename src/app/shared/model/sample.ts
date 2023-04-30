@@ -4,7 +4,7 @@ let EducationSample: Education = {
     id: null,
     title: "Nueva educacion",
     description: "Descripcion educacion",
-    photo: "example.png",
+    photo: null,
     institution: "Nombre de institucion",
     aboutInstitution: "Acerca de la institucion",
     indexPosition: 0
@@ -22,7 +22,7 @@ class ExperienceSample implements Experience {
         this.id = null;
         this.title = "Nueva experiencia";
         this.description = "Descripcion experiencia";
-        this.photo = "example.png";
+        this.photo = null;
         this.institution = "Nombre de institucion";
         this.aboutInstitution = "Acerca de la institucion";
         this.indexPosition = 0;
@@ -40,7 +40,7 @@ let ProjectSample: Project = {
     id: null,
     title: "Nuevo proyecto",
     description: "Descripcion proyecto",
-    photo: "example.png",
+    photo: null,
     institution: "Nombre de institucion",
     aboutInstitution: "Acerca de la institucion",
     indexPosition: 0
