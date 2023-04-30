@@ -50,7 +50,7 @@ export class ProjectCardComponent implements OnInit {
 
     // Muestra SweetAlert2 con el formulario personalizado
     Swal.fire({
-      title: 'Editar habilidad',
+      title: 'Editar Proyecto',
       html: form,
       confirmButtonText: 'Guardar',
       focusConfirm: false,
