@@ -10,7 +10,8 @@ import Swal  from 'sweetalert2';
 })
 export class AboutSectionComponent implements OnInit {
 
-  DESCRIPTION_PATTERN = /^[a-zA-ZÀ-ÿ0-9+\*\?\¿\¡\!\.\"s:\-*@\\\/%=#\$\|<>\(\)\[\]\^,&'\n]*$/;
+  TITLE_PATTERN = /^[\\w\\s\\p{Punct} a-zA-ZáéíóúüÁÉÍÓÚÜñÑ0-9\\-\\+\\?\\*]+$/;
+  DESCRIPTION_PATTERN = /^[\\w\\s\\p{Punct} aA-zZáéíóúüÁÉÍÓÚÜñÑ0-9\\-\\+\\?\\*\\/\\.\\,]+$/; // espacio, coma, punto y punto y coma
 
   @Input() data: any;
 

@@ -19,7 +19,7 @@
 					<span>{{data.firstName}}</span>
 				</div>
 			</div>
-			<h4>Full Stack Developer: Java/Angular</h4>
+			<h4>{{data.job}}</h4>
 			<div>
 				<div class="buttons" *ngIf="authService.getToken();">
 					<app-edit-button (click)="changeContact();">
