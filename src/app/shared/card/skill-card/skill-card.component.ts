@@ -28,6 +28,8 @@ export class SkillCardComponent implements OnInit {
 
   @ViewChild("name") name!: ElementRef;
 
+  loading = false;
+
   constructor(private skillService: SkillService, private ref: ElementRef, public authService: AuthService) {}
 
   ngOnInit(): void {
@@ -47,11 +49,22 @@ export class SkillCardComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         if (this.data.id != null) {
-          this.skillService.delete(this.data.id).subscribe(res => {
-            //Ignore?
+          this.loading = true;
+          this.skillService.delete(this.data.id).subscribe({
+            next: (v)=>{
+              this.loading = false;
+              this.deleteEvent.emit(index);
+              alertSuccess("La habilidad se eliminó correctamente!")
+            },
+            error: (err)=>{
+              this.loading = false;
+              alertError("Ocurrió un error, no se pudo eliminar la habilidad!")
+            }
           });
+        } else {
+          this.deleteEvent.emit(index);
+          alertSuccess("La habilidad se eliminó correctamente!")
         }
-        this.deleteEvent.emit(index);
       }
     });
   }
@@ -114,12 +127,15 @@ export class SkillCardComponent implements OnInit {
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
+        this.loading = true;
         this.skillService.save(result.value as Skill).subscribe({
           next: (v)=>{
             this.data = v as Skill;
+            this.loading = false;
             alertSuccess("La habilidad se actualizó con éxito!");
           },
           error: (err)=>{
+            this.loading = false;
             alertError("Ocurrió un error al intentar actualizar");
           }
         });

@@ -1,11 +1,9 @@
 <div class="row m-4">
     <div class="buttons" *ngIf="authService.getToken()">
         <app-warning-badge *ngIf="!this.data.id" [text]="'Hay cambios sin guardar'"></app-warning-badge>
-        <!--app-loading-spinner *ngIf="saving"></app-loading-spinner-->
-        <ng-container>
-            <app-edit-button (click)="edit();"></app-edit-button>
-            <app-delete-button (click)="delete(false);"></app-delete-button>
-        </ng-container>
+        <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+        <app-edit-button (click)="edit();"></app-edit-button>
+        <app-delete-button (click)="delete(false);"></app-delete-button>
     </div>
     <div class="col-6 col-md-4">
         <img src="{{data.photo!=''&&data.photo!=null?data.photo:'assets/img/arg_prog.jpg'}}" width="100%">

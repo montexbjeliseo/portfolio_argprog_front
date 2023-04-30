@@ -18,8 +18,7 @@ export class ProjectCardComponent implements OnInit {
   @Output('delete')
   deleteEvent = new EventEmitter<number>();
 
-  editting = false;
-  visible = true;
+  loading = false;
 
   constructor(private ref: ElementRef, private projectService: ProjectService, public authService: AuthService) { }
 
@@ -55,6 +54,7 @@ export class ProjectCardComponent implements OnInit {
       confirmButtonText: 'Guardar',
       focusConfirm: false,
       background: "rgba(33, 37, 41)",
+      showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
         const title = (document.getElementById(title_id) as HTMLInputElement).value;
@@ -67,21 +67,21 @@ export class ProjectCardComponent implements OnInit {
         if (!title || !description || !institution || !about_institution) {
           Swal.showValidationMessage('Complete todos los campos requeridos');
         } else {
-          if (!environment.TITLE_PATTERN.test(title)){
+          if (!environment.TITLE_PATTERN.test(title)) {
             Swal.showValidationMessage('Nombre: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
-          } else if (!environment.DESCRIPTION_PATTERN.test(description)){
+          } else if (!environment.DESCRIPTION_PATTERN.test(description)) {
             Swal.showValidationMessage('Descripcion del Proyector: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
-          } else if (!environment.TITLE_PATTERN.test(institution)){
+          } else if (!environment.TITLE_PATTERN.test(institution)) {
             Swal.showValidationMessage('Equipo/Empresa: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
-          } else if (!environment.DESCRIPTION_PATTERN.test(about_institution)){
+          } else if (!environment.DESCRIPTION_PATTERN.test(about_institution)) {
             Swal.showValidationMessage('Descripcion de Equipo/Empresa: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
           }
         }
 
         // Retorna un objeto con los valores del formulario
-        return { 
-          id: this.data.id, 
-          title: title, 
+        return {
+          id: this.data.id,
+          title: title,
           description: description,
           photo: photo,
           institution: institution,
@@ -92,12 +92,15 @@ export class ProjectCardComponent implements OnInit {
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
+        this.loading = true;
         this.projectService.save(result.value as Project).subscribe({
-          next: (v)=>{
+          next: (v) => {
             this.data = v as Project;
+            this.loading = false;
             alertSuccess("El proyecto se actualizó exitosamente!");
           },
-          error: (err)=>{
+          error: (err) => {
+            this.loading = false;
             alertError("Ocurrió un error al intentar actualizar los datos.")
           }
         });
@@ -118,11 +121,22 @@ export class ProjectCardComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         if (this.data.id != null) {
-          this.projectService.delete(this.data.id).subscribe(res => {
-            alertSuccess("Se eliminó correctamente!")
+          this.loading = true;
+          this.projectService.delete(this.data.id).subscribe({
+            next: (v) => {
+              this.loading = false;
+              this.deleteEvent.emit(index);
+              alertSuccess("El proyecto se eliminó correctamente!");
+            },
+            error: (err) => {
+              this.loading = false;
+              alertError("Ocurrió un mientras se intentaba eliminar el proyecto!")
+            }
           });
+        } else {
+          this.deleteEvent.emit(index);
+          alertSuccess("El proyecto se eliminó correctamente!");
         }
-        this.deleteEvent.emit(index);
       }
     });
   }

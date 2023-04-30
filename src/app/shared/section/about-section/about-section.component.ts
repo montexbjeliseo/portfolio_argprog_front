@@ -14,6 +14,11 @@ export class AboutSectionComponent implements OnInit {
 
   @Input() data: any;
 
+  loading_photo_link = false;
+  loading_names = false;
+  loading_about = false;
+  loading_contacts = false;
+
   constructor(public authService: AuthService, private dataService: DataService) { }
 
   ngOnInit(): void {
@@ -50,13 +55,16 @@ export class AboutSectionComponent implements OnInit {
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
+        this.loading_photo_link = true;
         this.dataService.changePhotoLink(result.value as string).subscribe({
           next: (v) => {
             this.data = v;
-            alertSuccess("El enlace se actualizó correctamente")
+            alertSuccess("El enlace se actualizó correctamente");
+            this.loading_photo_link = false;
           },
           error: (e) => {
             alertError(e as string);
+            this.loading_photo_link = false;
           }
         });
       }
@@ -114,13 +122,16 @@ export class AboutSectionComponent implements OnInit {
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
+        this.loading_names = true;
         this.dataService.changeNames(result.value?.firstName, result.value?.lastName).subscribe({
           next: (v) => {
             this.data = v;
-            alertSuccess("Los nombres se actualizaron correctamente")
+            alertSuccess("Los nombres se actualizaron correctamente");
+            this.loading_names = false;
           },
           error: (e) => {
             alertError(e as string);
+            this.loading_names = false;
           }
         });
       }
@@ -162,13 +173,16 @@ export class AboutSectionComponent implements OnInit {
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
+        this.loading_about = true;
         this.dataService.changeAbout(result.value as string).subscribe({
           next: (v) => {
+            this.loading_about = false;
             this.data = v;
             alertSuccess("\"Sobre mí\" se actualizó correctamente")
           },
           error: (e) => {
             alertError(e as string);
+            this.loading_about = false;
           }
         });
       }
@@ -223,14 +237,16 @@ export class AboutSectionComponent implements OnInit {
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
+        this.loading_contacts = true;
         this.dataService.changeContact(result.value?.email, result.value?.phoneNumber).subscribe({
           next: (v) => {
+            this.loading_contacts = false;
             this.data = v;
             alertSuccess("Los datos de contactos se actualizaron correctamente")
           },
           error: (e) => {
-            alertError(e.error.email ?? '' + '\n' + +e.error.phoneNumber ?? '');
-            console.log(e);
+            this.loading_contacts = false;
+            alertError("Ocurrió un error al intentar actualizar los datos!");
           }
         });
       }

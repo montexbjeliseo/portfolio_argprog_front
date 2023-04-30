@@ -4,6 +4,7 @@
 			<img src="{{data.photo??'assets/img/profile.png'}}" class="rounded-circle profile-img" 
 			style="background-color: #ddd;width: 100%; box-sizing: border-box; object-fit: cover;">
 		<div class="buttons" style="margin-top: -30px;" *ngIf="authService.getToken();">
+			<app-loading-spinner *ngIf="loading_photo_link"></app-loading-spinner>
 			<app-edit-button (click)="changePhotoLink();"></app-edit-button>
 		</div>
 	</div>
@@ -12,6 +13,7 @@
 		<div class="col-6 col-md-4">
 			<div class="fullname">
 				<div class="buttons" *ngIf="authService.getToken();">
+					<app-loading-spinner *ngIf="loading_names"></app-loading-spinner>
 					<app-edit-button (click)="changeNames();"></app-edit-button>
 				</div>
 				<div class="h3">
@@ -22,6 +24,7 @@
 			<h4>{{data.job}}</h4>
 			<div>
 				<div class="buttons" *ngIf="authService.getToken();">
+					<app-loading-spinner *ngIf="loading_contacts"></app-loading-spinner>
 					<app-edit-button (click)="changeContact();">
 					</app-edit-button>
 				</div>
@@ -33,6 +36,7 @@
 		</div>
 		<div class="col-md-8">
 			<div class="buttons" *ngIf="authService.getToken();">
+				<app-loading-spinner *ngIf="loading_about"></app-loading-spinner>
 				<app-edit-button (click)="editAbout();"></app-edit-button>
 			</div>
 			<h3>Sobre mí</h3>

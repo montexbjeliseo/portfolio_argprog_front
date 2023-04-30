@@ -1,6 +1,8 @@
 <div class="row m-4">
     <div class="buttons">
         <ng-container *ngIf="authService.getToken()">
+            <app-warning-badge *ngIf="!this.data.id" [text]="'Hay cambios sin guardar'"></app-warning-badge>
+            <app-loading-spinner *ngIf="loading"></app-loading-spinner>
             <app-edit-button (click)="edit();"></app-edit-button>
             <app-delete-button (click)="delete();"></app-delete-button>
         </ng-container>
@@ -9,10 +11,9 @@
         <img src="assets/img/somos_mas.png" width="100%">
     </div>
     <div class="col-md-8">
-        <h3>{{data.title}}</h3>
-        <p>
-            <i>{{data.description}}</i><br>
-            <a href="https://github.com/alkemyTech/OT298-server">Github Repository</a>
-        </p>
+        <div class="h3">{{data.title}}</div>
+        <div>{{data.description}}</div>
+        <div class="h4">{{data.institution}}</div>
+        <div>{{data.aboutInstitution}}</div>
     </div>
 </div>
