@@ -72,7 +72,7 @@ export class SkillCardComponent implements OnInit {
         <label>Nivel:</label>
         <br>
         <select id="${level_id}" required>
-          <option value="${this.data.description}">Selecciona un nivel</option>
+          <option value="${this.data.level}">Selecciona un nivel</option>
           <option value="basico">Básico</option>
           <option value="intermedio">Intermedio</option>
           <option value="avanzado">Avanzado</option>
@@ -101,13 +101,14 @@ export class SkillCardComponent implements OnInit {
         return { 
           id: this.data.id,
           name: name, 
-          description: level 
+          level: level 
         };
       }
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
-        this.skillService.save(result.value as Skill).subscribe(res=>{
+        this.skillService.save(result.value as Skill).subscribe(
+        res=>{
           this.data = res as Skill;
         },
         error =>{

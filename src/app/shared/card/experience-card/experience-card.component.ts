@@ -11,6 +11,7 @@ import { Experience } from '../../model/model';
 import { ExperienceService } from '../../service/experience.service';
 import { AuthService } from '../../service/auth.service';
 import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-experience-card',
@@ -28,7 +29,7 @@ export class ExperienceCardComponent implements OnInit {
   @Input() data!: Experience;
 
   constructor(private experienceService: ExperienceService, private ref: ElementRef, public authService: AuthService) {
-   }
+  }
 
   ngOnInit(): void {
   }
@@ -46,7 +47,7 @@ export class ExperienceCardComponent implements OnInit {
       background: "rgba(33, 37, 41)"
     }).then((result) => {
       if (result.isConfirmed) {
-        if (this.data.id != null){
+        if (this.data.id != null) {
           this.experienceService.delete(this.data.id).subscribe(res => {
             //Ignore?
           });
@@ -56,7 +57,7 @@ export class ExperienceCardComponent implements OnInit {
     });
   }
 
-  getIndex(){
+  getIndex() {
     return parseInt(this.ref.nativeElement.getAttribute('id'));
   }
 
@@ -85,6 +86,7 @@ export class ExperienceCardComponent implements OnInit {
       confirmButtonText: 'Guardar',
       focusConfirm: false,
       background: "rgba(33, 37, 41)",
+      showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
         const title = (document.getElementById(title_id) as HTMLInputElement).value;
@@ -94,14 +96,26 @@ export class ExperienceCardComponent implements OnInit {
         const about_institution = (document.getElementById(about_institution_id) as HTMLSelectElement).value;
 
         // Valida si los campos tienen un valor válido
-        if (!title || !description) {
-          Swal.showValidationMessage('Complete todos los campos requeridos');
+        if (!title || !description || !institution || !about_institution) {
+          Swal.showValidationMessage('Complete todos los campos requeridos. Foto es opcional');
+        } else {
+          if (!environment.TITLE_PATTERN.test(title)) {
+            Swal.showValidationMessage('Puesto: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
+          } else if (!environment.DESCRIPTION_PATTERN.test(description)) {
+            Swal.showValidationMessage('Descripción del puesto: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
+          } else if (!environment.TITLE_PATTERN.test(institution)) {
+            Swal.showValidationMessage('Empresa: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
+          } else if (!environment.DESCRIPTION_PATTERN.test(about_institution)) {
+            Swal.showValidationMessage('Descripcion de la Empresa: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
+          } else if(photo){
+
+          }
         }
 
         // Retorna un objeto con los valores del formulario
-        return { 
-          id: this.data.id, 
-          title: title, 
+        return {
+          id: this.data.id,
+          title: title,
           description: description,
           photo: photo,
           institution: institution,
@@ -112,18 +126,20 @@ export class ExperienceCardComponent implements OnInit {
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
-        this.experienceService.save(result.value as Experience).subscribe({next: (v)=>{
-          this.data = v as Experience;
-          this.alertSuccess("Los datos se actualizaron correctamente")
-        },
-        error: (error) =>{
-          this.alertError("Ocurrió un error");
-        }});
+        this.experienceService.save(result.value as Experience).subscribe({
+          next: (v) => {
+            this.data = v as Experience;
+            this.alertSuccess("Los datos se actualizaron correctamente")
+          },
+          error: (error) => {
+            this.alertError("Ocurrió un error");
+          }
+        });
       }
-    });    
+    });
   }
 
-  alertError(msg: string){
+  alertError(msg: string) {
     Swal.fire({
       title: 'Error',
       text: msg,
@@ -132,7 +148,7 @@ export class ExperienceCardComponent implements OnInit {
     });
   }
 
-  alertSuccess(msg: string){
+  alertSuccess(msg: string) {
     Swal.fire(
       {
         title: 'Operación exitosa!',

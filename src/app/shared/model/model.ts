@@ -30,7 +30,8 @@ interface Experience {
 interface Skill {
     id: number | null;
     name: string | null;
-    description: string | null;
+    level: string | null;
+    image: string | null;
 }
 
 interface Project {

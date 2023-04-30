@@ -32,7 +32,8 @@ class ExperienceSample implements Experience {
 let SkillSample: Skill = {
     id: null,
     name: "Nueva habilidad",
-    description: "Descripcion"
+    level: "basico",
+    image: null
 }
 
 let ProjectSample: Project = {
