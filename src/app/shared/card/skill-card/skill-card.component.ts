@@ -12,7 +12,7 @@ import { AuthService } from '../../service/auth.service';
 import Swal from 'sweetalert2';
 import { Skill } from '../../model/model';
 import { environment } from 'src/environments/environment';
-import { alertError, alertSuccess } from '../../util/alerts';
+import { alertError, alertSuccess, alertTheme } from '../../util/alerts';
 
 @Component({
   selector: 'app-skill-card',
@@ -42,10 +42,11 @@ export class SkillCardComponent implements OnInit {
       text: "Estas apunto de eliminar una educacion, deseas continuar?",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: alertTheme.confirmButtonColor,
+      cancelButtonColor: alertTheme.cancelButtonColor,
+      color: alertTheme.textColor,
       confirmButtonText: 'Sí, deseo continuar',
-      background: "rgba(33, 37, 41)"
+      background: alertTheme.background
     }).then((result) => {
       if (result.isConfirmed) {
         if (this.data.id != null) {
@@ -101,7 +102,9 @@ export class SkillCardComponent implements OnInit {
       html: form,
       confirmButtonText: 'Guardar',
       focusConfirm: false,
-      background: "rgba(33, 37, 41)",
+      color: alertTheme.textColor,
+      background: alertTheme.background,
+      confirmButtonColor: alertTheme.confirmButtonColor,
       showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario

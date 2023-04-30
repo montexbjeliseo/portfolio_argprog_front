@@ -9,7 +9,7 @@ import {
 import { EducationService } from '../../service/education.service';
 import { AuthService } from '../../service/auth.service';
 import Swal from 'sweetalert2';
-import { alertError, alertSuccess } from '../../util/alerts';
+import { alertError, alertSuccess, alertTheme } from '../../util/alerts';
 import { environment } from 'src/environments/environment';
 import { Education } from '../../model/model';
 
@@ -62,7 +62,10 @@ export class EducationCardComponent implements OnInit {
       html: form,
       confirmButtonText: 'Guardar',
       focusConfirm: false,
-      background: "rgba(33, 37, 41)",
+      color: alertTheme.textColor,
+      confirmButtonColor: alertTheme.confirmButtonColor,
+      cancelButtonColor: alertTheme.cancelButtonColor,
+      background: alertTheme.background,
       showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
@@ -125,10 +128,11 @@ export class EducationCardComponent implements OnInit {
       text: "Estas apunto de eliminar una educacion, ¿deseas continuar?",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: alertTheme.confirmButtonColor,
+      cancelButtonColor: alertTheme.cancelButtonColor,
       confirmButtonText: 'Sí, deseo continuar',
-      background: "rgba(33, 37, 41)"
+      color: alertTheme.textColor,
+      background: alertTheme.background
     }).then((result) => {
       if (result.isConfirmed) {
         if (this.data.id != null){

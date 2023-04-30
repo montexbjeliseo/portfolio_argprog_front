@@ -3,7 +3,7 @@ import { AuthService } from '../../service/auth.service';
 import { DataService } from '../../service/data.service';
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
-import { alertError, alertSuccess } from '../../util/alerts';
+import { alertError, alertSuccess, alertTheme } from '../../util/alerts';
 
 @Component({
   selector: 'app-about-section',
@@ -39,8 +39,10 @@ export class AboutSectionComponent implements OnInit {
       title: 'Editar enlace de foto de perfil',
       html: changePhotoLinkForm,
       confirmButtonText: 'Guardar',
+      confirmButtonColor: alertTheme.confirmButtonColor,
       focusConfirm: false,
-      background: "rgba(33, 37, 41)",
+      color: alertTheme.textColor,
+      background: alertTheme.background,
       showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
@@ -94,8 +96,10 @@ export class AboutSectionComponent implements OnInit {
       title: 'Editar nombres y apellido/s, titular',
       html: changeNamesForm,
       confirmButtonText: 'Guardar',
+      confirmButtonColor: alertTheme.confirmButtonColor,
       focusConfirm: false,
-      background: "rgba(33, 37, 41)",
+      color: alertTheme.textColor,
+      background: alertTheme.background,
       showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
@@ -153,8 +157,10 @@ export class AboutSectionComponent implements OnInit {
       title: 'Editar sobre mí',
       html: changeAboutForm,
       confirmButtonText: 'Guardar',
+      confirmButtonColor: alertTheme.confirmButtonColor,
       focusConfirm: false,
-      background: "rgba(33, 37, 41)",
+      color: alertTheme.textColor,
+      background: alertTheme.background,
       showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
@@ -208,8 +214,10 @@ export class AboutSectionComponent implements OnInit {
       title: 'Editar email y telefono',
       html: changeContactForm,
       confirmButtonText: 'Guardar',
+      confirmButtonColor: alertTheme.confirmButtonColor,
       focusConfirm: false,
-      background: "rgba(33, 37, 41)",
+      color: alertTheme.textColor,
+      background: alertTheme.background,
       showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario

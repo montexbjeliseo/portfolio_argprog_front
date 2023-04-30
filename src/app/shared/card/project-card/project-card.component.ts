@@ -4,7 +4,7 @@ import { ProjectService } from '../../service/project.service';
 import { Project } from '../../model/model';
 import { AuthService } from '../../service/auth.service';
 import { environment } from 'src/environments/environment';
-import { alertError, alertSuccess } from '../../util/alerts';
+import { alertError, alertSuccess, alertTheme } from '../../util/alerts';
 
 @Component({
   selector: 'app-project-card',
@@ -53,7 +53,9 @@ export class ProjectCardComponent implements OnInit {
       html: form,
       confirmButtonText: 'Guardar',
       focusConfirm: false,
-      background: "rgba(33, 37, 41)",
+      confirmButtonColor: alertTheme.confirmButtonColor,
+      color: alertTheme.textColor,
+      background: alertTheme.background,
       showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
@@ -114,10 +116,11 @@ export class ProjectCardComponent implements OnInit {
       text: "Estás apunto de eliminar un proyecto. ¿Deseas continuar?",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: alertTheme.confirmButtonColor,
+      cancelButtonColor: alertTheme.cancelButtonColor,
       confirmButtonText: 'Sí, deseo continuar',
-      background: "rgba(33, 37, 41)"
+      background: alertTheme.background,
+      color: alertTheme.textColor
     }).then((result) => {
       if (result.isConfirmed) {
         if (this.data.id != null) {

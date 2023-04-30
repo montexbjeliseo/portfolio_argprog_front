@@ -4,7 +4,6 @@ import {
   Input,
   Output,
   EventEmitter,
-  ViewChild,
   ElementRef
 } from '@angular/core';
 import { Experience } from '../../model/model';
@@ -12,7 +11,7 @@ import { ExperienceService } from '../../service/experience.service';
 import { AuthService } from '../../service/auth.service';
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
-import { alertError, alertSuccess } from '../../util/alerts';
+import { alertError, alertSuccess, alertTheme } from '../../util/alerts';
 
 @Component({
   selector: 'app-experience-card',
@@ -44,10 +43,11 @@ export class ExperienceCardComponent implements OnInit {
       text: "Estas apunto de eliminar una experiencia, deseas continuar?",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      color: alertTheme.textColor,
+      confirmButtonColor: alertTheme.confirmButtonColor,
+      cancelButtonColor: alertTheme.cancelButtonColor,
       confirmButtonText: 'Sí, deseo continuar',
-      background: "rgba(33, 37, 41)"
+      background: alertTheme.background,
     }).then((result) => {
       if (result.isConfirmed) {
         if (this.data.id != null) {
@@ -98,7 +98,8 @@ export class ExperienceCardComponent implements OnInit {
       html: form,
       confirmButtonText: 'Guardar',
       focusConfirm: false,
-      background: "rgba(33, 37, 41)",
+      color: alertTheme.textColor,
+      background: alertTheme.background,
       showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
