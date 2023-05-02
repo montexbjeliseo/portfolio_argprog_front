@@ -30,7 +30,15 @@ body {
 .app-section {
     margin-top: 60px;
 }
+.app-section,
+.about-section {
+    background-color: rgb(95, 158, 160, 0.8);
+}
 
 .btn {
     font-weight: bolder;
+}
+
+.btn:hover {
+    border: 1px solid #fff;
 }
