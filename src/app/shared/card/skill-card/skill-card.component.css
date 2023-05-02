@@ -56,3 +56,15 @@
 .skill-html5 .skill-text {
   color: tomato;
 }
+
+.basico {
+  background: conic-gradient(orange 45%, rgba(255, 99, 71, 0.2) 90%);
+}
+
+.intermedio {
+  background: conic-gradient(green 60%, rgba(255, 99, 71, 0.2) 60%);
+}
+
+.avanzado {
+  background: conic-gradient(blue 90%, rgba(255, 99, 71, 0.2) 90%);
+}

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '../service/auth.service';
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
-import { alertError, alertSuccess } from '../util/alerts';
+import { alertError, alertSuccess, alertTheme } from '../util/alerts';
 import { AuthResponse, UserLogin } from '../model/model';
 
 @Component({
@@ -45,8 +45,10 @@ export class NavbarComponent implements OnInit {
       title: 'Iniciar sesión',
       html: login_form,
       confirmButtonText: 'Iniciar',
+      confirmButtonColor: alertTheme.confirmButtonColor,
       focusConfirm: false,
-      background: "rgba(33, 37, 41)",
+      color: alertTheme.textColor,
+      background: alertTheme.background,
       showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
@@ -99,10 +101,11 @@ export class NavbarComponent implements OnInit {
       text: "Estás apunto de cerrar sesión. ¿Deseas continuar?",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: alertTheme.confirmButtonColor,
+      cancelButtonColor: alertTheme.cancelButtonColor,
       confirmButtonText: 'Sí, deseo cerrar sesión',
-      background: "rgba(33, 37, 41)"
+      color: alertTheme.textColor,
+      background: alertTheme.background
     }).then((result) => {
       if (result.isConfirmed) {
         this.authService.logout();

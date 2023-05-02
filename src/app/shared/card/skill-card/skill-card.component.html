@@ -5,9 +5,9 @@
         <app-edit-button (click)="edit();"></app-edit-button>
         <app-delete-button (click)="delete();"></app-delete-button>
     </div>
-    <div class="progress skill-html5">
+    <div class="progress {{data.level}}">
         <div class="progress-value">
-            <div class="skill-text {{data.level}}" #name>
+            <div class="skill-text" #name>
                 {{data.name}}
             </div>
         </div>

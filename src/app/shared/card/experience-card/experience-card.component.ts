@@ -10,8 +10,8 @@ import { Experience } from '../../model/model';
 import { ExperienceService } from '../../service/experience.service';
 import { AuthService } from '../../service/auth.service';
 import Swal from 'sweetalert2';
-import { environment } from 'src/environments/environment';
 import { alertError, alertSuccess, alertTheme } from '../../util/alerts';
+import { patterns } from 'src/app/utils/validation-patterns';
 
 @Component({
   selector: 'app-experience-card',
@@ -113,13 +113,13 @@ export class ExperienceCardComponent implements OnInit {
         if (!title || !description || !institution || !about_institution) {
           Swal.showValidationMessage('Complete todos los campos requeridos. Foto es opcional');
         } else {
-          if (!environment.TITLE_PATTERN.test(title)) {
+          if (!patterns.TITLE.test(title)) {
             Swal.showValidationMessage('Puesto: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
-          } else if (!environment.DESCRIPTION_PATTERN.test(description)) {
+          } else if (!patterns.DESCRIPTION.test(description)) {
             Swal.showValidationMessage('Descripción del puesto: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
-          } else if (!environment.TITLE_PATTERN.test(institution)) {
+          } else if (!patterns.TITLE.test(institution)) {
             Swal.showValidationMessage('Empresa: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
-          } else if (!environment.DESCRIPTION_PATTERN.test(about_institution)) {
+          } else if (!patterns.DESCRIPTION.test(about_institution)) {
             Swal.showValidationMessage('Descripcion de la Empresa: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
           } else if (photo) {
 

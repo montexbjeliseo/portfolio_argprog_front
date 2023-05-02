@@ -1,5 +1,11 @@
 <div class="home-page-container">
     <ng-container *ngIf="state==SHOW">
+        <div class="social">
+            <a href="https://www.linkedin.com/in/montenegroeliseo9/" target="_blank"><i class="bi bi-linkedin"></i></a>
+            <a href="https://github.com/montexbjeliseo" target="_blank"><i class="bi bi-github"></i></a>
+            <a href="mailto:secondmtx@gmail.com" target="_blank"><i class="bi bi-envelope"></i></a>
+            <a href="https://discordapp.com/users/montexbjeliseo#8977" target="_blank"><i class="bi bi-discord"></i></a>
+        </div>
         <app-about-section [data]="data"></app-about-section>
         <app-experience-section [data]="data.experiences"></app-experience-section>
         <app-education-section [data]="data.educations"></app-education-section>
