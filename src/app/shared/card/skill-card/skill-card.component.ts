@@ -11,8 +11,8 @@ import { SkillService } from '../../service/skill.service';
 import { AuthService } from '../../service/auth.service';
 import Swal from 'sweetalert2';
 import { Skill } from '../../model/model';
-import { environment } from 'src/environments/environment';
 import { alertError, alertSuccess, alertTheme } from '../../util/alerts';
+import { patterns } from 'src/app/utils/validation-patterns';
 
 @Component({
   selector: 'app-skill-card',
@@ -115,7 +115,7 @@ export class SkillCardComponent implements OnInit {
         if (!name || !level) {
           Swal.showValidationMessage('Complete todos los campos requeridos');
         } else {
-          if(!environment.TITLE_PATTERN.test(name)){
+          if(!patterns.TITLE.test(name)){
             Swal.showValidationMessage('Nombre: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
           }
         }

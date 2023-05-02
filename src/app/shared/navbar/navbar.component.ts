@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '../service/auth.service';
 import Swal from 'sweetalert2';
-import { environment } from 'src/environments/environment';
 import { alertError, alertSuccess, alertTheme } from '../util/alerts';
 import { AuthResponse, UserLogin } from '../model/model';
+import { patterns } from 'src/app/utils/validation-patterns';
 
 @Component({
   selector: 'app-navbar',
@@ -59,7 +59,7 @@ export class NavbarComponent implements OnInit {
         if (!username || !password) {
           Swal.showValidationMessage('Complete todos los campos requeridos');
         } else {
-          if (!environment.EMAIL_PATTERN.test(username)) {
+          if (!patterns.EMAIL.test(username)) {
             Swal.showValidationMessage('Correo: formato de correo electrónico inválido!');
           }
         }
