@@ -4,3 +4,39 @@
 .nav-link:hover {
     color: aqua;
 }
+
+@media (max-width: 450px) {
+    
+    .nav li {
+        display: none;
+    }
+
+    .nav {
+        display: list-item;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .nav:hover {
+        border-bottom: 1px solid #fff;
+    }
+
+    .nav:hover li {
+        display: block;
+    }
+
+    .hbutton {
+        display: block;
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+
+    .hbutton div {
+        width: 35px;
+        height: 5px;
+        background-color: white;
+        margin: 6px 0;
+      }
+}

@@ -1,5 +1,5 @@
-<div class="border rounded-3 container-fluid">
-    <h2 class="h2">{{ "educacion" | uppercase}}</h2>
+<div id="education" class="app-section border rounded-3 container-fluid">
+    <h2 class="h2">{{ "educación" | uppercase}}</h2>
     <ng-container *ngFor="let education of data; let i = index">
         <app-education-card [data]="education" [attr.id]="i" (delete)="delete(i);"></app-education-card>
     </ng-container>

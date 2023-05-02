@@ -1,5 +1,5 @@
-<div class="border rounded-3 container-fluid">
-    <h2>Experiencia</h2>
+<div id="experience" class="app-section border rounded-3 container-fluid">
+    <h2>EXPERIENCIA</h2>
     <ng-container *ngIf="data.length!=0; else nocontent">
         <ng-container *ngFor="let experience of data; let i = index">
             <app-experience-card [data]="experience" [attr.id]="i" (delete)="delete(i);"></app-experience-card>

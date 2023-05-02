@@ -8,40 +8,40 @@
                     <img src="assets/img/programa.png" class="bi me-2" width="40" height="32" role="img" />
                     #ArgentinaPrograma
                 </a>
+                
                 <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                    <a class="hbutton">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </a>
                     <li>
-                        <a href="#inicio" class="nav-link"
-                            target="_blank">
+                        <a href="#" class="nav-link">
                             Inicio
                         </a>
                     </li>
                     <li>
-                        <a href="#sobre" class="nav-link"
-                            target="_blank">
+                        <a href="#about" class="nav-link">
                             Sobre mí
                         </a>
                     </li>
                     <li>
-                        <a href="#experiencia" class="nav-link"
-                            target="_blank">
+                        <a href="#experience" class="nav-link">
                             Experiencia
                         </a>
                     </li>
                     <li>
-                        <a href="#inicio" class="nav-link"
-                            target="_blank">
+                        <a href="#education" class="nav-link">
                             Educación
                         </a>
                     </li>
                     <li>
-                        <a href="#inicio" class="nav-link"
-                            target="_blank">
+                        <a href="#skills" class="nav-link">
                             Habilidades
                         </a>
                     </li>
                     <li>
-                        <a href="#inicio" class="nav-link"
-                            target="_blank">
+                        <a href="#projects" class="nav-link">
                             Proyectos
                         </a>
                     </li>
@@ -50,8 +50,8 @@
                         <app-loading-spinner *ngIf="waiting_for_login"></app-loading-spinner>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="nav-link" *ngIf="!authService.getToken()&&!waiting_for_login"
-                            (click)="login();">
+                        <a href="javascript:void(0);" class="nav-link"
+                            *ngIf="!authService.getToken()&&!waiting_for_login" (click)="login();">
                             <i class="bi bi-box-arrow-in-left"></i>
                         </a>
                         <a href="javascript:void(0);" (click)="logout();" class="nav-link"

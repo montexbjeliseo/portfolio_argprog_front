@@ -1,4 +1,4 @@
-<div class="p-3 skill-card">
+<div class="f-card p-3 skill-card">
     <div class="buttons" *ngIf="authService.getToken()">
         <app-warning-badge *ngIf="!this.data.id" [text]="'Hay cambios sin guardar'"></app-warning-badge>
         <app-loading-spinner *ngIf="loading"></app-loading-spinner>
