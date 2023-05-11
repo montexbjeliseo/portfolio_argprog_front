@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
 import { DataService } from '../../service/data.service';
-import Swal  from 'sweetalert2';
+import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment';
+import { alertError, alertSuccess } from '../../util/alerts';
 
 @Component({
   selector: 'app-about-section',
@@ -10,16 +12,19 @@ import Swal  from 'sweetalert2';
 })
 export class AboutSectionComponent implements OnInit {
 
-  DESCRIPTION_PATTERN = /^[a-zA-ZÀ-ÿ0-9+\*\?\¿\¡\!\.\"s:\-*@\\\/%=#\$\|<>\(\)\[\]\^,&'\n]*$/;
-
   @Input() data: any;
+
+  loading_photo_link = false;
+  loading_names = false;
+  loading_about = false;
+  loading_contacts = false;
 
   constructor(public authService: AuthService, private dataService: DataService) { }
 
   ngOnInit(): void {
   }
 
-  changePhotoLink(){
+  changePhotoLink() {
     // Crea el HTML del formulario
     const changePhotoLinkForm = `
       <form>
@@ -40,32 +45,33 @@ export class AboutSectionComponent implements OnInit {
       preConfirm: () => {
         // Obtiene los valores del formulario
         const photo_link = (document.getElementById("photo_link_id") as HTMLInputElement).value;
-
         // Valida si los campos tienen un valor válido
         if (!photo_link) {
           Swal.showValidationMessage('Complete todos los campos requeridos');
         }
-
         // Retorna un objeto con los valores del formulario
         return photo_link;
       }
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
+        this.loading_photo_link = true;
         this.dataService.changePhotoLink(result.value as string).subscribe({
           next: (v) => {
             this.data = v;
-            this.alertSuccess("El enlace se actualizó correctamente")
+            alertSuccess("El enlace se actualizó correctamente");
+            this.loading_photo_link = false;
           },
           error: (e) => {
-            this.alertError(e as string);
+            alertError(e as string);
+            this.loading_photo_link = false;
           }
         });
       }
     });
   }
 
-  changeNames(){
+  changeNames() {
     // Crea el HTML del formulario
     const changeNamesForm = `
       <form>
@@ -76,12 +82,16 @@ export class AboutSectionComponent implements OnInit {
         <label>Apellido/s: </label>
         <br>
         <input type="text" id="profile_last_name_id" value="${this.data.lastName}" required>
+        <br>
+        <label>Puesto/Especialización: </label>
+        <br>
+        <input type="text" id="profile_job_id" value="${this.data.job}" required>
       </form>
     `;
 
     // Muestra SweetAlert2 con el formulario personalizado
     Swal.fire({
-      title: 'Editar nombres y apellido/s',
+      title: 'Editar nombres y apellido/s, titular',
       html: changeNamesForm,
       confirmButtonText: 'Guardar',
       focusConfirm: false,
@@ -91,35 +101,44 @@ export class AboutSectionComponent implements OnInit {
         // Obtiene los valores del formulario
         const firstNameValue = (document.getElementById("profile_first_name_id") as HTMLInputElement).value;
         const lastNameValue = (document.getElementById("profile_last_name_id") as HTMLInputElement).value;
+        const jobValue = (document.getElementById("profile_job_id") as HTMLInputElement).value;
 
         // Valida si los campos tienen un valor válido
-        if (!firstNameValue&&!lastNameValue) {
+        if (!firstNameValue || !lastNameValue || !jobValue) {
           Swal.showValidationMessage('Complete todos los campos requeridos');
+        } else if (!environment.FIRSTNAME_PATTERN.test(firstNameValue) ||
+          !environment.LASTNAME_PATTERN.test(lastNameValue) ||
+          !environment.DESCRIPTION_PATTERN) {
+          Swal.showValidationMessage('Asegúrese de no haber ingresado caracteres especiales o números');
         }
 
         // Retorna un objeto con los valores del formulario
         return {
           firstName: firstNameValue,
-          lastName: lastNameValue
+          lastName: lastNameValue,
+          job: jobValue
         }
       }
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
+        this.loading_names = true;
         this.dataService.changeNames(result.value?.firstName, result.value?.lastName).subscribe({
           next: (v) => {
             this.data = v;
-            this.alertSuccess("Los nombres se actualizaron correctamente")
+            alertSuccess("Los nombres se actualizaron correctamente");
+            this.loading_names = false;
           },
           error: (e) => {
-            this.alertError(e as string);
+            alertError(e as string);
+            this.loading_names = false;
           }
         });
       }
     });
   }
 
-  editAbout(){
+  editAbout() {
     // Crea el HTML del formulario
     const changeAboutForm = `
       <form>
@@ -140,9 +159,11 @@ export class AboutSectionComponent implements OnInit {
       preConfirm: () => {
         // Obtiene los valores del formulario
         const aboutValue = (document.getElementById("profile_about_id") as HTMLInputElement).value;
-        
+
         // Valida si los campos tienen un valor válido
-        if (!this.DESCRIPTION_PATTERN.test(aboutValue)) {
+        if(!aboutValue){
+          Swal.showValidationMessage('El campo no puede estar vacío');
+        } else if (!environment.DESCRIPTION_PATTERN.test(aboutValue)) {
           Swal.showValidationMessage('Asegúrese de no haber ingresado caracteres especiales');
         }
 
@@ -152,39 +173,23 @@ export class AboutSectionComponent implements OnInit {
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
+        this.loading_about = true;
         this.dataService.changeAbout(result.value as string).subscribe({
           next: (v) => {
+            this.loading_about = false;
             this.data = v;
-            this.alertSuccess("\"Sobre mí\" se actualizó correctamente")
+            alertSuccess("\"Sobre mí\" se actualizó correctamente")
           },
           error: (e) => {
-            this.alertError(e as string);
+            alertError(e as string);
+            this.loading_about = false;
           }
         });
       }
     });
   }
 
-  alertError(msg: string){
-    Swal.fire({
-      title: 'Error',
-      text: msg,
-      icon: 'warning',
-      background: "rgba(33, 37, 41)"
-    });
-  }
-
-  alertSuccess(msg: string){
-    Swal.fire(
-      {
-        title: 'Operación exitosa!',
-        text: msg,
-        icon: 'success',
-        background: "rgba(33, 37, 41)"
-      });
-  }
-
-  changeContact(){
+  changeContact() {
     // Crea el HTML del formulario
     const changeContactForm = `
       <form>
@@ -212,8 +217,15 @@ export class AboutSectionComponent implements OnInit {
         const phoneNumberValue = (document.getElementById("profile_phone_number_id") as HTMLInputElement).value;
 
         // Valida si los campos tienen un valor válido
-        if (!emailValue&&!phoneNumberValue) {
+        if (!emailValue && !phoneNumberValue) {
           Swal.showValidationMessage('Complete todos los campos requeridos');
+        } else {
+          if (!environment.EMAIL_PATTERN.test(emailValue)) {
+            Swal.showValidationMessage('Formato de e-mail (\"example@mail.com\") inválido');
+          }
+          if (!environment.PHONE_NUMBER_PATTERN.test(phoneNumberValue)) {
+            Swal.showValidationMessage('Formato de número telefónico (\"+000(0000)000000\") inválido');
+          }
         }
 
         // Retorna un objeto con los valores del formulario
@@ -225,14 +237,16 @@ export class AboutSectionComponent implements OnInit {
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
+        this.loading_contacts = true;
         this.dataService.changeContact(result.value?.email, result.value?.phoneNumber).subscribe({
           next: (v) => {
+            this.loading_contacts = false;
             this.data = v;
-            this.alertSuccess("Los datos de contactos se actualizaron correctamente")
+            alertSuccess("Los datos de contactos se actualizaron correctamente")
           },
           error: (e) => {
-            this.alertError(e.error.email??'' + '\n' + +e.error.phoneNumber??'');
-            console.log(e);
+            this.loading_contacts = false;
+            alertError("Ocurrió un error al intentar actualizar los datos!");
           }
         });
       }

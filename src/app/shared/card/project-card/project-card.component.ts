@@ -3,6 +3,8 @@ import Swal from 'sweetalert2';
 import { ProjectService } from '../../service/project.service';
 import { Project } from '../../model/model';
 import { AuthService } from '../../service/auth.service';
+import { environment } from 'src/environments/environment';
+import { alertError, alertSuccess } from '../../util/alerts';
 
 @Component({
   selector: 'app-project-card',
@@ -16,8 +18,7 @@ export class ProjectCardComponent implements OnInit {
   @Output('delete')
   deleteEvent = new EventEmitter<number>();
 
-  editting = false;
-  visible = true;
+  loading = false;
 
   constructor(private ref: ElementRef, private projectService: ProjectService, public authService: AuthService) { }
 
@@ -48,11 +49,12 @@ export class ProjectCardComponent implements OnInit {
 
     // Muestra SweetAlert2 con el formulario personalizado
     Swal.fire({
-      title: 'Editar habilidad',
+      title: 'Editar Proyecto',
       html: form,
       confirmButtonText: 'Guardar',
       focusConfirm: false,
       background: "rgba(33, 37, 41)",
+      showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
         const title = (document.getElementById(title_id) as HTMLInputElement).value;
@@ -62,14 +64,24 @@ export class ProjectCardComponent implements OnInit {
         const about_institution = (document.getElementById(about_institution_id) as HTMLSelectElement).value;
 
         // Valida si los campos tienen un valor válido
-        if (!title || !description) {
+        if (!title || !description || !institution || !about_institution) {
           Swal.showValidationMessage('Complete todos los campos requeridos');
+        } else {
+          if (!environment.TITLE_PATTERN.test(title)) {
+            Swal.showValidationMessage('Nombre: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
+          } else if (!environment.DESCRIPTION_PATTERN.test(description)) {
+            Swal.showValidationMessage('Descripcion del Proyector: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
+          } else if (!environment.TITLE_PATTERN.test(institution)) {
+            Swal.showValidationMessage('Equipo/Empresa: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
+          } else if (!environment.DESCRIPTION_PATTERN.test(about_institution)) {
+            Swal.showValidationMessage('Descripcion de Equipo/Empresa: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
+          }
         }
 
         // Retorna un objeto con los valores del formulario
-        return { 
-          id: this.data.id, 
-          title: title, 
+        return {
+          id: this.data.id,
+          title: title,
           description: description,
           photo: photo,
           institution: institution,
@@ -80,11 +92,17 @@ export class ProjectCardComponent implements OnInit {
     }).then((result) => {
       // Muestra los resultados obtenidos al enviar el formulario
       if (result.isConfirmed) {
-        this.projectService.save(result.value as Project).subscribe(res=>{
-          this.data = res;
-        },
-        error =>{
-          console.log("Error", error);
+        this.loading = true;
+        this.projectService.save(result.value as Project).subscribe({
+          next: (v) => {
+            this.data = v as Project;
+            this.loading = false;
+            alertSuccess("El proyecto se actualizó exitosamente!");
+          },
+          error: (err) => {
+            this.loading = false;
+            alertError("Ocurrió un error al intentar actualizar los datos.")
+          }
         });
       }
     });
@@ -103,11 +121,22 @@ export class ProjectCardComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         if (this.data.id != null) {
-          this.projectService.delete(this.data.id).subscribe(res => {
-            //Ignore?
+          this.loading = true;
+          this.projectService.delete(this.data.id).subscribe({
+            next: (v) => {
+              this.loading = false;
+              this.deleteEvent.emit(index);
+              alertSuccess("El proyecto se eliminó correctamente!");
+            },
+            error: (err) => {
+              this.loading = false;
+              alertError("Ocurrió un mientras se intentaba eliminar el proyecto!")
+            }
           });
+        } else {
+          this.deleteEvent.emit(index);
+          alertSuccess("El proyecto se eliminó correctamente!");
         }
-        this.deleteEvent.emit(index);
       }
     });
   }
