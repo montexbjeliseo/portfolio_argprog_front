@@ -32,7 +32,7 @@ body {
 }
 .app-section,
 .about-section {
-    background-color: rgb(95, 158, 160, 0.8);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .btn {
