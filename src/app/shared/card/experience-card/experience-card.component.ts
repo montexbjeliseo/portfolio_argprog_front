@@ -36,7 +36,7 @@ export class ExperienceCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  delete(confirm: boolean) {
+  delete() {
     let index = parseInt(this.ref.nativeElement.getAttribute('id'));
     Swal.fire({
       title: 'Estás seguro?',
