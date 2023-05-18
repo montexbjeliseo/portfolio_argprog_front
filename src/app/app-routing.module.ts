@@ -7,9 +7,6 @@ import { AuthenticatedGuard } from './shared/guard/authenticated.guard';
 const routes: Routes = [
 	{
 		path: '', component: HomeComponent, pathMatch: 'full'
-	},
-	{
-		path: 'login', component: LoginComponent, pathMatch: 'full'
 	}
 ];
 

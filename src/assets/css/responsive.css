@@ -1,0 +1,13 @@
+@media (max-width: 768px) {
+    .col-6.col-md-4 {
+        width: 100%;
+    }
+
+    .cards {
+        display: flex;
+    }
+
+    .app-section {
+        text-align: center;
+    }
+}

@@ -43,6 +43,7 @@ let ProjectSample: Project = {
     photo: null,
     institution: "Nombre de institucion",
     aboutInstitution: "Acerca de la institucion",
+    links: null,
     indexPosition: 0
 }
 

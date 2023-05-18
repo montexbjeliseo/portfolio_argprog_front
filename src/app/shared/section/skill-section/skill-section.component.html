@@ -1,5 +1,5 @@
-<div class="border rounded-3 container-fluid gap-2">
-    <h2>Hard and Soft Skills</h2>
+<div id="skills" class="app-section border rounded-3 container-fluid gap-2">
+    <h2>HARD AND SOFT SKILLS</h2>
     <div class="cards">
         <ng-container *ngFor="let skill of data; let i = index">
             <app-skill-card [data]="skill" (delete)="delete(i);"></app-skill-card>

@@ -1,3 +1,6 @@
+* {
+  color: tomato;
+}
 .container-fluid {
   width: 90%;
 }
@@ -41,7 +44,7 @@
 }
 
 .skill-html5 {
-  background: conic-gradient(tomato 90%, rgba(255, 99, 71, 0.2) 90%);
+  background: conic-gradient(green 90%, rgba(255, 99, 71, 0.2) 90%);
 }
 
 .skill-css3 {

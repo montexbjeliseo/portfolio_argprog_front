@@ -8,6 +8,8 @@ import { environment } from 'src/environments/environment';
 })
 export class DataService {
 
+  about = environment.apiUrl + '/about';
+
   constructor(private http: HttpClient) { }
 
   get(): Observable<{}>{
@@ -15,26 +17,26 @@ export class DataService {
   }
 
   changePhotoLink(link: string): Observable<{}>{
-    return this.http.post(environment.apiUrl + '/about', {
+    return this.http.post(this.about, {
       photo: link
     });
   }
 
   changeNames(firstName: string|undefined, lastName: string|undefined): Observable<{}>{
-    return this.http.post(environment.apiUrl + '/about', { 
+    return this.http.post(this.about, { 
       firstName: firstName,
       lastName: lastName
      });
   }
 
   changeAbout(about: string): Observable<{}>{
-    return this.http.post(environment.apiUrl + "/about", {
+    return this.http.post(this.about, {
       about: about
     });
   }
 
   changeContact(email: string|undefined, phoneNumber: string|undefined): Observable<{}>{
-    return this.http.post(environment.apiUrl + "/about", {
+    return this.http.post(this.about, {
       email: email,
       phoneNumber: phoneNumber
     });

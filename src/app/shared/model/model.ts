@@ -42,6 +42,13 @@ interface Project {
     institution: string | null;
     aboutInstitution: string | null;
     indexPosition: number | null;
+    links: Link[] | null;
+}
+
+interface Link {
+    id: number | null;
+    name: string | null;
+    url: string | null;
 }
 
 export {
@@ -50,5 +57,6 @@ export {
     Education,
     Experience,
     Skill,
-    Project
+    Project,
+    Link
 }

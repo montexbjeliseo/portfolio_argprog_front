@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
 import { DataService } from '../../service/data.service';
 import Swal from 'sweetalert2';
-import { environment } from 'src/environments/environment';
-import { alertError, alertSuccess } from '../../util/alerts';
+import { alertError, alertSuccess, alertTheme } from '../../util/alerts';
+import { patterns } from 'src/app/utils/validation-patterns';
 
 @Component({
   selector: 'app-about-section',
@@ -39,8 +39,10 @@ export class AboutSectionComponent implements OnInit {
       title: 'Editar enlace de foto de perfil',
       html: changePhotoLinkForm,
       confirmButtonText: 'Guardar',
+      confirmButtonColor: alertTheme.confirmButtonColor,
       focusConfirm: false,
-      background: "rgba(33, 37, 41)",
+      color: alertTheme.textColor,
+      background: alertTheme.background,
       showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
@@ -94,8 +96,10 @@ export class AboutSectionComponent implements OnInit {
       title: 'Editar nombres y apellido/s, titular',
       html: changeNamesForm,
       confirmButtonText: 'Guardar',
+      confirmButtonColor: alertTheme.confirmButtonColor,
       focusConfirm: false,
-      background: "rgba(33, 37, 41)",
+      color: alertTheme.textColor,
+      background: alertTheme.background,
       showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
@@ -106,9 +110,9 @@ export class AboutSectionComponent implements OnInit {
         // Valida si los campos tienen un valor válido
         if (!firstNameValue || !lastNameValue || !jobValue) {
           Swal.showValidationMessage('Complete todos los campos requeridos');
-        } else if (!environment.FIRSTNAME_PATTERN.test(firstNameValue) ||
-          !environment.LASTNAME_PATTERN.test(lastNameValue) ||
-          !environment.DESCRIPTION_PATTERN) {
+        } else if (!patterns.FIRSTNAME.test(firstNameValue) ||
+          !patterns.LASTNAME.test(lastNameValue) ||
+          !patterns.DESCRIPTION) {
           Swal.showValidationMessage('Asegúrese de no haber ingresado caracteres especiales o números');
         }
 
@@ -153,17 +157,19 @@ export class AboutSectionComponent implements OnInit {
       title: 'Editar sobre mí',
       html: changeAboutForm,
       confirmButtonText: 'Guardar',
+      confirmButtonColor: alertTheme.confirmButtonColor,
       focusConfirm: false,
-      background: "rgba(33, 37, 41)",
+      color: alertTheme.textColor,
+      background: alertTheme.background,
       showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
         const aboutValue = (document.getElementById("profile_about_id") as HTMLInputElement).value;
 
         // Valida si los campos tienen un valor válido
-        if(!aboutValue){
+        if (!aboutValue) {
           Swal.showValidationMessage('El campo no puede estar vacío');
-        } else if (!environment.DESCRIPTION_PATTERN.test(aboutValue)) {
+        } else if (!patterns.DESCRIPTION.test(aboutValue)) {
           Swal.showValidationMessage('Asegúrese de no haber ingresado caracteres especiales');
         }
 
@@ -208,8 +214,10 @@ export class AboutSectionComponent implements OnInit {
       title: 'Editar email y telefono',
       html: changeContactForm,
       confirmButtonText: 'Guardar',
+      confirmButtonColor: alertTheme.confirmButtonColor,
       focusConfirm: false,
-      background: "rgba(33, 37, 41)",
+      color: alertTheme.textColor,
+      background: alertTheme.background,
       showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
@@ -220,10 +228,10 @@ export class AboutSectionComponent implements OnInit {
         if (!emailValue && !phoneNumberValue) {
           Swal.showValidationMessage('Complete todos los campos requeridos');
         } else {
-          if (!environment.EMAIL_PATTERN.test(emailValue)) {
+          if (!patterns.EMAIL.test(emailValue)) {
             Swal.showValidationMessage('Formato de e-mail (\"example@mail.com\") inválido');
           }
-          if (!environment.PHONE_NUMBER_PATTERN.test(phoneNumberValue)) {
+          if (!patterns.PHONE_NUMBER.test(phoneNumberValue)) {
             Swal.showValidationMessage('Formato de número telefónico (\"+000(0000)000000\") inválido');
           }
         }
