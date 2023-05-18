@@ -1,5 +1,5 @@
-<header>
-    <div class="px-3 py-2 bg-dark text-white border-bottom">
+<header class="sticky-top">
+    <div class="px-3 py-2 text-white">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a href="https://www.argentina.gob.ar/economia/conocimiento/argentina-programa"
@@ -8,19 +8,54 @@
                     <img src="assets/img/programa.png" class="bi me-2" width="40" height="32" role="img" />
                     #ArgentinaPrograma
                 </a>
+                
                 <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                    <a class="hbutton">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </a>
                     <li>
-                        <a href="https://www.linkedin.com/in/montenegroeliseo9/" class="nav-link text-white"
-                            target="_blank">
-                            <i class="bi bi-linkedin"></i>
+                        <a href="#" class="nav-link">
+                            Inicio
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#about" class="nav-link">
+                            Sobre mí
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#experience" class="nav-link">
+                            Experiencia
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#education" class="nav-link">
+                            Educación
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#skills" class="nav-link">
+                            Habilidades
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#projects" class="nav-link">
+                            Proyectos
                         </a>
                     </li>
                     <li>|</li>
                     <li>
-                        <a href="./login" class="nav-link text-white" *ngIf="!authService.getToken()">
+                        <app-loading-spinner *ngIf="waiting_for_login"></app-loading-spinner>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="nav-link"
+                            *ngIf="!authService.getToken()&&!waiting_for_login" (click)="login();">
                             <i class="bi bi-box-arrow-in-left"></i>
                         </a>
-                        <a href="#logout" (click)="authService.logout();" class="nav-link text-white" *ngIf="authService.getToken()">
+                        <a href="javascript:void(0);" (click)="logout();" class="nav-link"
+                            *ngIf="authService.getToken()">
                             <i class="bi bi-box-arrow-in-right"></i>
                         </a>
                     </li>

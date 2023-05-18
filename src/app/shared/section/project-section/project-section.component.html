@@ -1,5 +1,5 @@
-<div class="border rounded-3 container-fluid">
-    <h2>Proyectos</h2>
+<div id="projects" class="app-section border rounded-3 container-fluid">
+    <h2>PROYECTOS</h2>
     <ng-container *ngIf="data.length!=0; else nocontent">
         <ng-container  *ngFor="let project of data; let i = index">
             <app-project-card [data]="project" [attr.id]="i" (delete)="delete(i)"></app-project-card>

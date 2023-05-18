@@ -1,12 +1,12 @@
-<div class="row m-1">
+<div class="f-card row m-1">
     <div class="buttons" *ngIf="authService.getToken()">
         <app-warning-badge *ngIf="!data.id" text="Sin guardar"></app-warning-badge>
         <app-loading-spinner *ngIf="loading"></app-loading-spinner>
         <app-edit-button (click)="edit();"></app-edit-button>
         <app-delete-button (click)="delete(false);"></app-delete-button>
     </div>
-    <div class="col-6 col-md-4 border">
-        <img src="assets/img/education.png" width="100%">
+    <div class="col-6 col-md-4 card-image-container">
+        <img class="card-image" src="assets/img/education.png">
     </div>
     <div class="col-md-8">
         <div class="h3">{{data.title}}</div>

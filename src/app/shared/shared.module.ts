@@ -18,9 +18,9 @@ import { XButtonComponent } from './button/x-button/x-button.component';
 import { SkillCardComponent } from './card/skill-card/skill-card.component';
 import { ProjectCardComponent } from './card/project-card/project-card.component';
 import { ExperienceCardComponent } from './card/experience-card/experience-card.component';
-import { ConfirmationModalComponent } from './modal/confirmation-modal/confirmation-modal.component';
 import { WarningBadgeComponent } from './badge/warning-badge/warning-badge.component';
 import { LoadingSpinnerComponent } from './spinner/loading-spinner/loading-spinner.component';
+import { LinkButtonComponent } from './button/link-button/link-button.component';
 
 
 @NgModule({
@@ -41,9 +41,9 @@ import { LoadingSpinnerComponent } from './spinner/loading-spinner/loading-spinn
     SkillCardComponent,
     ProjectCardComponent,
     ExperienceCardComponent,
-    ConfirmationModalComponent,
     WarningBadgeComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    LinkButtonComponent
   ],
   exports: [
     NavbarComponent,
@@ -62,9 +62,9 @@ import { LoadingSpinnerComponent } from './spinner/loading-spinner/loading-spinn
     SkillCardComponent,
     ProjectCardComponent,
     ExperienceCardComponent,
-    ConfirmationModalComponent,
     WarningBadgeComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    LinkButtonComponent
   ],
   imports: [
     CommonModule,

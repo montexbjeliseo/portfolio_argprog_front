@@ -4,15 +4,14 @@ import {
   Input,
   Output,
   EventEmitter,
-  ViewChild,
   ElementRef
 } from '@angular/core';
 import { Experience } from '../../model/model';
 import { ExperienceService } from '../../service/experience.service';
 import { AuthService } from '../../service/auth.service';
 import Swal from 'sweetalert2';
-import { environment } from 'src/environments/environment';
-import { alertError, alertSuccess } from '../../util/alerts';
+import { alertError, alertSuccess, alertTheme } from '../../util/alerts';
+import { patterns } from 'src/app/utils/validation-patterns';
 
 @Component({
   selector: 'app-experience-card',
@@ -37,17 +36,18 @@ export class ExperienceCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  delete(confirm: boolean) {
+  delete() {
     let index = parseInt(this.ref.nativeElement.getAttribute('id'));
     Swal.fire({
       title: 'Estás seguro?',
       text: "Estas apunto de eliminar una experiencia, deseas continuar?",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      color: alertTheme.textColor,
+      confirmButtonColor: alertTheme.confirmButtonColor,
+      cancelButtonColor: alertTheme.cancelButtonColor,
       confirmButtonText: 'Sí, deseo continuar',
-      background: "rgba(33, 37, 41)"
+      background: alertTheme.background,
     }).then((result) => {
       if (result.isConfirmed) {
         if (this.data.id != null) {
@@ -98,7 +98,8 @@ export class ExperienceCardComponent implements OnInit {
       html: form,
       confirmButtonText: 'Guardar',
       focusConfirm: false,
-      background: "rgba(33, 37, 41)",
+      color: alertTheme.textColor,
+      background: alertTheme.background,
       showCloseButton: true,
       preConfirm: () => {
         // Obtiene los valores del formulario
@@ -112,13 +113,13 @@ export class ExperienceCardComponent implements OnInit {
         if (!title || !description || !institution || !about_institution) {
           Swal.showValidationMessage('Complete todos los campos requeridos. Foto es opcional');
         } else {
-          if (!environment.TITLE_PATTERN.test(title)) {
+          if (!patterns.TITLE.test(title)) {
             Swal.showValidationMessage('Puesto: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
-          } else if (!environment.DESCRIPTION_PATTERN.test(description)) {
+          } else if (!patterns.DESCRIPTION.test(description)) {
             Swal.showValidationMessage('Descripción del puesto: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
-          } else if (!environment.TITLE_PATTERN.test(institution)) {
+          } else if (!patterns.TITLE.test(institution)) {
             Swal.showValidationMessage('Empresa: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
-          } else if (!environment.DESCRIPTION_PATTERN.test(about_institution)) {
+          } else if (!patterns.DESCRIPTION.test(about_institution)) {
             Swal.showValidationMessage('Descripcion de la Empresa: solo se admiten letras números, espacios en blanco y ciertos caracteres especiales como - + * ?');
           } else if (photo) {
 

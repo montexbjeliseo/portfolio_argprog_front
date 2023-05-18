@@ -12,9 +12,3 @@
     color: #444;
     cursor: pointer;
 }
-
-[contenteditable=true]:focus {
-    border:0;
-    border-bottom: 2px solid #465611;
-    outline: none;
-}

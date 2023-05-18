@@ -1,12 +1,12 @@
-<div class="row m-4">
+<div class="f-card row m-4">
     <div class="buttons" *ngIf="authService.getToken()">
         <app-warning-badge *ngIf="!this.data.id" [text]="'Hay cambios sin guardar'"></app-warning-badge>
         <app-loading-spinner *ngIf="loading"></app-loading-spinner>
         <app-edit-button (click)="edit();"></app-edit-button>
-        <app-delete-button (click)="delete(false);"></app-delete-button>
+        <app-delete-button (click)="delete();"></app-delete-button>
     </div>
-    <div class="col-6 col-md-4">
-        <img src="{{data.photo!=''&&data.photo!=null?data.photo:'assets/img/arg_prog.jpg'}}" width="100%">
+    <div class="col-6 col-md-4 card-image-container">
+        <img class="card-image" src="{{data.photo!=''&&data.photo!=null?data.photo:'assets/img/work.png'}}" width="100%">
     </div>
     <div class="col-md-8">
         <div class="h3">{{data.title}}</div>
