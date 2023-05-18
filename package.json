@@ -22,12 +22,12 @@
     "ngx-cookie-service": "^15.0.0",
     "rxjs": "~7.5.0",
     "sweetalert": "^2.1.2",
-    "sweetalert2": "^11.7.3",
+    "sweetalert2": "^11.4.8",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^14.1.0",
+    "@angular-devkit/build-angular": "^15.2.8",
     "@angular/compiler-cli": "^15.2.9",
     "@types/jasmine": "~4.0.0",
     "jasmine-core": "~4.2.0",
