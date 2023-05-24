@@ -1,7 +1,6 @@
-# App1
+# Argentina Programa Portfolio Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
-
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0, updated to 15.0.x
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
